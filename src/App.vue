@@ -1,24 +1,29 @@
 <template>
-  <div id="app" class="min-h-screen">
-    <Navbar />
+  <ErrorBoundary>
+    <div id="app" class="min-h-screen">
+      <Navbar />
 
-    <router-view v-slot="{ Component, route }">
-      <transition
-        :name="route.meta.transition || 'fade'"
-        mode="out-in"
-      >
-        <component :is="Component" :key="route.path" />
-      </transition>
-    </router-view>
+      <router-view v-slot="{ Component, route }">
+        <transition
+          :name="route.meta.transition || 'fade'"
+          mode="out-in"
+        >
+          <ErrorBoundary :key="route.path">
+            <component :is="Component" :key="route.path" />
+          </ErrorBoundary>
+        </transition>
+      </router-view>
 
-    <Toast />
-  </div>
+      <Toast />
+    </div>
+  </ErrorBoundary>
 </template>
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import Navbar from '@/components/Navbar.vue'
 import Toast from '@/components/Toast.vue'
+import ErrorBoundary from '@/components/ErrorBoundary.vue'
 import { useThemeStore } from '@/stores/theme'
 
 const themeStore = useThemeStore()
