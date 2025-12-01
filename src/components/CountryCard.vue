@@ -3,12 +3,13 @@
     class="glass-card rounded-lg shadow-md hover:shadow-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 cursor-pointer group animate-fade-in"
     @click="navigateToDetail"
   >
-    <div class="relative h-48 overflow-hidden bg-gray-200 dark:bg-gray-700">
-      <img
+    <div class="relative h-48">
+      <OptimizedImage
         :src="country.flags.svg"
         :alt="country.flags.alt || `Bandera de ${country.name.common}`"
-        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-        loading="lazy"
+        aspect-ratio="3/2"
+        container-class="relative h-full overflow-hidden bg-gray-200 dark:bg-gray-700"
+        image-class="group-hover:scale-110 transition-transform duration-300"
       />
       <button
         @click.stop="toggleFavorite"
@@ -114,6 +115,7 @@ import { Heart, MapPin, Globe2, Users, Maximize, Languages, DollarSign, Map, Ext
 import { useFavoritesStore } from '@/stores/favorites'
 import { storeToRefs } from 'pinia'
 import type { Country } from '@/types/country'
+import OptimizedImage from './OptimizedImage.vue'
 
 interface Props {
   country: Country

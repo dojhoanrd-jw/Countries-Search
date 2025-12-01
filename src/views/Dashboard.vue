@@ -131,13 +131,92 @@
         </button>
       </div>
 
-      <!-- Countries Grid -->
-      <div v-else-if="filteredCountries.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <CountryCard
-          v-for="country in filteredCountries"
-          :key="country.cca3"
-          :country="country"
-        />
+      <!-- Countries Grid with Pagination -->
+      <div v-else-if="filteredCountries.length > 0">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <CountryCard
+            v-for="country in paginatedItems"
+            :key="country.cca3"
+            :country="country"
+          />
+        </div>
+
+        <!-- Pagination Controls -->
+        <div v-if="totalPages > 1" class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="text-sm text-gray-600 dark:text-gray-400">
+            Mostrando {{ startIndex + 1 }}-{{ endIndex }} de {{ filteredCountries.length }} países
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <button
+              @click="goToFirstPage"
+              :disabled="currentPage === 1"
+              class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              title="Primera página"
+            >
+              <ChevronsLeft class="w-4 h-4" />
+            </button>
+
+            <button
+              @click="prevPage"
+              :disabled="currentPage === 1"
+              class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              title="Página anterior"
+            >
+              <ChevronLeft class="w-4 h-4" />
+            </button>
+
+            <div class="flex items-center space-x-1">
+              <button
+                v-for="page in visiblePages"
+                :key="page"
+                @click="goToPage(page)"
+                :class="[
+                  'px-4 py-2 rounded-lg transition-colors duration-200',
+                  currentPage === page
+                    ? 'bg-primary-600 text-white'
+                    : 'border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700'
+                ]"
+              >
+                {{ page }}
+              </button>
+            </div>
+
+            <button
+              @click="nextPage"
+              :disabled="currentPage === totalPages"
+              class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              title="Página siguiente"
+            >
+              <ChevronRight class="w-4 h-4" />
+            </button>
+
+            <button
+              @click="goToLastPage"
+              :disabled="currentPage === totalPages"
+              class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              title="Última página"
+            >
+              <ChevronsRight class="w-4 h-4" />
+            </button>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <label for="itemsPerPage" class="text-sm text-gray-600 dark:text-gray-400">
+              Por página:
+            </label>
+            <select
+              id="itemsPerPage"
+              v-model.number="itemsPerPage"
+              class="px-3 py-2 bg-white dark:bg-[#1a1a1a] border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+            >
+              <option :value="12">12</option>
+              <option :value="24">24</option>
+              <option :value="48">48</option>
+              <option :value="96">96</option>
+            </select>
+          </div>
+        </div>
       </div>
 
       <!-- Empty State -->
@@ -157,12 +236,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, defineAsyncComponent } from 'vue'
 import { storeToRefs } from 'pinia'
-import { Search, Filter, ArrowUpDown, ArrowUp, ArrowDown, RotateCcw, ChevronDown, Globe, AlertCircle } from 'lucide-vue-next'
+import {
+  Search, Filter, ArrowUpDown, ArrowUp, ArrowDown, RotateCcw,
+  ChevronDown, Globe, AlertCircle, ChevronLeft, ChevronRight,
+  ChevronsLeft, ChevronsRight
+} from 'lucide-vue-next'
 import { useCountriesStore } from '@/stores/countries'
-import CountryCard from '@/components/CountryCard.vue'
+import { usePagination } from '@/composables/usePagination'
 import SkeletonCard from '@/components/SkeletonCard.vue'
+
+// Async component for better code splitting
+const CountryCard = defineAsyncComponent(() => import('@/components/CountryCard.vue'))
 
 const countriesStore = useCountriesStore()
 const { filteredCountries, regions, loading, error } = storeToRefs(countriesStore)
@@ -175,6 +261,22 @@ const sortOrder = ref<'asc' | 'desc'>('asc')
 const showAdvancedFilters = ref(false)
 const languageFilter = ref('')
 const currencyFilter = ref('')
+
+// Pagination
+const {
+  currentPage,
+  itemsPerPage,
+  totalPages,
+  startIndex,
+  endIndex,
+  paginatedItems,
+  visiblePages,
+  goToPage,
+  nextPage,
+  prevPage,
+  goToFirstPage,
+  goToLastPage,
+} = usePagination(() => filteredCountries.value, { itemsPerPage: 12 })
 
 // Watch filters and update store
 watch([searchQuery, selectedRegion, languageFilter, currencyFilter], () => {
