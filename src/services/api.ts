@@ -1,7 +1,14 @@
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios'
 import type { Country } from '@/types/country'
 
-const API_BASE_URL = 'https://restcountries.com/v3.1'
+// Environment variables with fallback defaults
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://restcountries.com/v3.1'
+const API_TIMEOUT = parseInt(import.meta.env.VITE_API_TIMEOUT) || 15000
+const CACHE_TTL_MINUTES = parseInt(import.meta.env.VITE_CACHE_TTL_MINUTES) || 5
+const RETRY_ATTEMPTS = parseInt(import.meta.env.VITE_RETRY_ATTEMPTS) || 3
+const RETRY_DELAY = parseInt(import.meta.env.VITE_RETRY_DELAY) || 1000
+
+// API Fields (hardcoded - business logic, not configuration)
 const FIELDS = 'name,cca2,cca3,capital,region,subregion,languages,currencies,population,area,flags,coatOfArms,maps,timezones,continents,borders,tld,latlng'
 
 // Extend AxiosRequestConfig to include metadata
@@ -21,7 +28,7 @@ interface CacheEntry<T> {
 
 class ApiCache {
   private cache = new Map<string, CacheEntry<any>>()
-  private readonly TTL = 5 * 60 * 1000 // 5 minutes
+  private readonly TTL = CACHE_TTL_MINUTES * 60 * 1000 // From env variable
 
   get<T>(key: string): T | null {
     const entry = this.cache.get(key)
@@ -105,7 +112,7 @@ async function fetchWithRetry<T>(
 // ==================== AXIOS INSTANCE ====================
 const api: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 15000,
+  timeout: API_TIMEOUT,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
@@ -170,8 +177,8 @@ export const countriesApi = {
           const responses = await Promise.all(promises)
           return responses.flatMap(response => response.data)
         },
-        3,
-        1000,
+        RETRY_ATTEMPTS,
+        RETRY_DELAY,
         cacheKey
       )
 
@@ -212,8 +219,8 @@ export const countriesApi = {
           })
           return response.data[0]
         },
-        3,
-        1000,
+        RETRY_ATTEMPTS,
+        RETRY_DELAY,
         cacheKey
       )
 
@@ -254,8 +261,8 @@ export const countriesApi = {
           })
           return response.data
         },
-        3,
-        1000,
+        RETRY_ATTEMPTS,
+        RETRY_DELAY,
         cacheKey
       )
 
@@ -291,8 +298,8 @@ export const countriesApi = {
           })
           return response.data
         },
-        2, // Less retries for search
-        500,
+        2, // Less retries for search (hardcoded)
+        RETRY_DELAY / 2, // Half delay for search
         cacheKey
       )
 
