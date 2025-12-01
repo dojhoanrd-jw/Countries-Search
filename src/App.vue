@@ -10,12 +10,15 @@
         <component :is="Component" :key="route.path" />
       </transition>
     </router-view>
+
+    <Toast />
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import Navbar from '@/components/Navbar.vue'
+import Toast from '@/components/Toast.vue'
 import { useThemeStore } from '@/stores/theme'
 
 const themeStore = useThemeStore()

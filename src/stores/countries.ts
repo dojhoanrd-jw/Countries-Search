@@ -2,11 +2,11 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { Country, CountryFilters, CountryStats } from '@/types/country'
 import { countriesApi } from '@/services/api'
+import { useNotificationsStore } from './notifications'
 
 export const useCountriesStore = defineStore('countries', () => {
   const countries = ref<Country[]>([])
   const loading = ref(false)
-  const error = ref<string | null>(null)
   const filters = ref<CountryFilters>({
     search: '',
     region: '',
@@ -121,13 +121,29 @@ export const useCountriesStore = defineStore('countries', () => {
   })
 
   async function fetchCountries() {
+    const notifications = useNotificationsStore()
     loading.value = true
-    error.value = null
+
     try {
       countries.value = await countriesApi.getAllCountries()
-    } catch (e) {
-      error.value = 'Error al cargar los países. Por favor, intenta de nuevo.'
+      notifications.success(`${countries.value.length} países cargados correctamente`)
+    } catch (e: any) {
       console.error('Error fetching countries:', e)
+
+      // Determine specific error message
+      let errorMessage = 'Error al cargar los países. Por favor, intenta de nuevo.'
+
+      if (e.code === 'ECONNABORTED' || e.message?.includes('timeout')) {
+        errorMessage = 'La solicitud tardó demasiado. Verifica tu conexión e intenta de nuevo.'
+      } else if (e.response?.status === 404) {
+        errorMessage = 'No se encontraron los datos de países. Por favor, contacta a soporte.'
+      } else if (!navigator.onLine) {
+        errorMessage = 'Sin conexión a internet. Por favor, verifica tu red.'
+      } else if (e.response?.status >= 500) {
+        errorMessage = 'Error del servidor. Por favor, intenta más tarde.'
+      }
+
+      notifications.error(errorMessage)
     } finally {
       loading.value = false
     }
@@ -156,7 +172,6 @@ export const useCountriesStore = defineStore('countries', () => {
   return {
     countries,
     loading,
-    error,
     filters,
     sortBy,
     sortOrder,
