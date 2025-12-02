@@ -13,7 +13,7 @@ const getBrowserLocale = (): string => {
 
 export type MessageSchema = typeof es
 
-const i18n = createI18n<[MessageSchema], 'es' | 'en'>({
+const i18n = createI18n({
   legacy: false, // Use Composition API mode
   locale: getBrowserLocale(),
   fallbackLocale: 'es',

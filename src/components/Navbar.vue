@@ -154,7 +154,7 @@ const mobileMenuOpen = ref(false)
 
 const toggleLanguage = () => {
   const newLocale = locale.value === 'es' ? 'en' : 'es'
-  setLocale(newLocale as 'es' | 'en')
+  setLocale(newLocale)
 }
 </script>
 
