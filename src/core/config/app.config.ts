@@ -41,6 +41,24 @@ export const appConfig = {
     maxComparisonItems: 4,
     maxFavorites: 100,
   },
+
+  notifications: {
+    duration: {
+      success: 4000,
+      error: 7000,
+      warning: 5000,
+      info: 5000,
+    },
+  },
+
+  localStorage: {
+    keys: {
+      theme: 'theme',
+      locale: 'locale',
+      favorites: 'country-favorites',
+      comparison: 'country-comparison',
+    },
+  },
 } as const
 
 export type AppConfig = typeof appConfig

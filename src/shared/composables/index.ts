@@ -4,3 +4,5 @@
  */
 
 export { usePagination } from './usePagination'
+export { useLocalStorage, useLocalStorageString, useLocalStorageBoolean, useLocalStorageNumber } from './useLocalStorage'
+export { useErrorHandler } from './useErrorHandler'

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { Country, CountryFilters, CountryStats } from '@/core/types'
 import { countriesApi, useNotificationsStore } from '@/shared/services'
+import { useErrorHandler } from '@/shared/composables'
 
 export const useCountriesStore = defineStore('countries', () => {
   const countries = ref<Country[]>([])
@@ -16,6 +17,9 @@ export const useCountriesStore = defineStore('countries', () => {
   })
   const sortBy = ref<'name' | 'population' | 'area'>('name')
   const sortOrder = ref<'asc' | 'desc'>('asc')
+
+  const notifications = useNotificationsStore()
+  const { getErrorMessage, shouldLog } = useErrorHandler()
 
   const filteredCountries = computed(() => {
     let result = [...countries.value]
@@ -120,28 +124,21 @@ export const useCountriesStore = defineStore('countries', () => {
   })
 
   async function fetchCountries() {
-    const notifications = useNotificationsStore()
     loading.value = true
 
     try {
       countries.value = await countriesApi.getAllCountries()
       notifications.success(`${countries.value.length} países cargados correctamente`)
-    } catch (e: any) {
-      console.error('Error fetching countries:', e)
-
-      // Determine specific error message
-      let errorMessage = 'Error al cargar los países. Por favor, intenta de nuevo.'
-
-      if (e.code === 'ECONNABORTED' || e.message?.includes('timeout')) {
-        errorMessage = 'La solicitud tardó demasiado. Verifica tu conexión e intenta de nuevo.'
-      } else if (e.response?.status === 404) {
-        errorMessage = 'No se encontraron los datos de países. Por favor, contacta a soporte.'
-      } else if (!navigator.onLine) {
-        errorMessage = 'Sin conexión a internet. Por favor, verifica tu red.'
-      } else if (e.response?.status >= 500) {
-        errorMessage = 'Error del servidor. Por favor, intenta más tarde.'
+    } catch (error: any) {
+      // Use centralized error handler
+      if (shouldLog(error)) {
+        console.error('Error fetching countries:', error)
       }
 
+      const errorMessage = getErrorMessage(
+        error,
+        'Error al cargar los países. Por favor, intenta de nuevo.'
+      )
       notifications.error(errorMessage)
     } finally {
       loading.value = false
