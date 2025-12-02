@@ -11,9 +11,12 @@
         container-class="relative h-full overflow-hidden bg-gray-200 dark:bg-gray-700"
         image-class="group-hover:scale-110 transition-transform duration-300"
       />
-      <button
+      <BaseButton
         @click.stop="toggleFavorite"
-        class="absolute top-3 right-3 p-2 bg-white/90 dark:bg-[#1a1a1a]/90 rounded-full hover:bg-white dark:hover:bg-gray-800 transition-colors duration-200 shadow-lg"
+        variant="ghost"
+        size="sm"
+        rounded
+        class="absolute top-3 right-3 bg-white/90 dark:bg-[#1a1a1a]/90 hover:bg-white dark:hover:bg-gray-800 shadow-lg"
         :title="isFavorite ? $t('countryCard.removeFromFavorites') : $t('countryCard.addToFavorites')"
       >
         <Heart
@@ -21,7 +24,7 @@
           :class="isFavorite ? 'text-red-500' : 'text-gray-400'"
           :fill="isFavorite ? 'currentColor' : 'none'"
         />
-      </button>
+      </BaseButton>
     </div>
 
     <div class="p-6">
@@ -86,23 +89,25 @@
           <ExternalLink class="w-3 h-3" />
         </a>
 
-        <button
+        <BaseButton
           v-if="!isInComparison"
           @click.stop="addToComparison"
           :disabled="!canAddToComparison"
-          class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+          variant="ghost"
+          size="sm"
           :title="$t('countryCard.addToComparison')"
         >
-          <GitCompare class="w-4 h-4 text-gray-600 dark:text-gray-400" />
-        </button>
-        <button
+          <GitCompare class="w-4 h-4" />
+        </BaseButton>
+        <BaseButton
           v-else
           @click.stop="removeFromComparison"
-          class="p-2 rounded-lg bg-primary-100 dark:bg-primary-900 hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors duration-200"
+          variant="primary"
+          size="sm"
           :title="$t('countryCard.removeFromComparison')"
         >
-          <GitCompare class="w-4 h-4 text-primary-600 dark:text-primary-400" />
-        </button>
+          <GitCompare class="w-4 h-4" />
+        </BaseButton>
       </div>
     </div>
   </div>
@@ -117,6 +122,7 @@ import { useCountryName } from '@/composables/useCountryName'
 import { storeToRefs } from 'pinia'
 import type { Country } from '@/types/country'
 import OptimizedImage from './OptimizedImage.vue'
+import { BaseButton } from '@/components/ui'
 
 interface Props {
   country: Country

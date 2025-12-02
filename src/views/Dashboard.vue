@@ -14,15 +14,16 @@
       <!-- Search and Filters -->
       <div class="mb-8 space-y-4">
         <!-- Search Bar -->
-        <div class="relative">
-          <Search class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-          <input
-            v-model="searchQuery"
-            type="text"
-            :placeholder="$t('dashboard.searchPlaceholder')"
-            class="w-full pl-12 pr-4 py-3 bg-white dark:bg-[#1a1a1a] border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200"
-          />
-        </div>
+        <BaseInput
+          v-model="searchQuery"
+          type="search"
+          :placeholder="$t('dashboard.searchPlaceholder')"
+          size="lg"
+        >
+          <template #icon-left>
+            <Search class="w-5 h-5" />
+          </template>
+        </BaseInput>
 
         <!-- Filters Row -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -54,22 +55,30 @@
           </div>
 
           <!-- Sort Order -->
-          <button
+          <BaseButton
+            variant="outline"
+            size="lg"
             @click="toggleSortOrder"
-            class="flex items-center justify-center space-x-2 px-4 py-3 bg-white dark:bg-[#1a1a1a] border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200"
+            full-width
           >
-            <component :is="sortOrder === 'asc' ? ArrowUp : ArrowDown" class="w-4 h-4" />
-            <span>{{ sortOrder === 'asc' ? $t('dashboard.sortOrder.asc') : $t('dashboard.sortOrder.desc') }}</span>
-          </button>
+            <template #icon-left>
+              <component :is="sortOrder === 'asc' ? ArrowUp : ArrowDown" class="w-4 h-4" />
+            </template>
+            {{ sortOrder === 'asc' ? $t('dashboard.sortOrder.asc') : $t('dashboard.sortOrder.desc') }}
+          </BaseButton>
 
           <!-- Reset Filters -->
-          <button
+          <BaseButton
+            variant="primary"
+            size="lg"
             @click="resetAllFilters"
-            class="flex items-center justify-center space-x-2 px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-all duration-200"
+            full-width
           >
-            <RotateCcw class="w-4 h-4" />
-            <span>{{ $t('common.reset') }}</span>
-          </button>
+            <template #icon-left>
+              <RotateCcw class="w-4 h-4" />
+            </template>
+            {{ $t('common.reset') }}
+          </BaseButton>
         </div>
 
         <!-- Advanced Filters (Collapsible) -->
@@ -95,17 +104,17 @@
           >
             <div v-if="showAdvancedFilters" class="px-4 pb-4 space-y-4 border-t border-gray-200 dark:border-gray-700 pt-4">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input
+                <BaseInput
                   v-model="languageFilter"
                   type="text"
                   :placeholder="$t('dashboard.filterByLanguage')"
-                  class="px-4 py-2 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                  variant="filled"
                 />
-                <input
+                <BaseInput
                   v-model="currencyFilter"
                   type="text"
                   :placeholder="$t('dashboard.filterByCurrency')"
-                  class="px-4 py-2 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                  variant="filled"
                 />
               </div>
             </div>
@@ -123,12 +132,13 @@
         <AlertCircle class="w-16 h-16 text-red-500 mx-auto mb-4" />
         <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{{ $t('dashboard.errorLoading') }}</h3>
         <p class="text-gray-600 dark:text-gray-400 mb-4">{{ error }}</p>
-        <button
+        <BaseButton
+          variant="primary"
+          size="lg"
           @click="fetchCountries"
-          class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors duration-200"
         >
           {{ $t('common.retry') }}
-        </button>
+        </BaseButton>
       </div>
 
       <!-- Countries Grid with Pagination -->
@@ -224,12 +234,13 @@
         <Globe class="w-16 h-16 text-gray-400 mx-auto mb-4" />
         <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{{ $t('dashboard.noCountries') }}</h3>
         <p class="text-gray-600 dark:text-gray-400 mb-4">{{ $t('dashboard.tryAdjustFilters') }}</p>
-        <button
+        <BaseButton
+          variant="primary"
+          size="lg"
           @click="resetAllFilters"
-          class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors duration-200"
         >
           {{ $t('common.reset') }}
-        </button>
+        </BaseButton>
       </div>
     </div>
   </div>
@@ -246,6 +257,7 @@ import {
 import { useCountriesStore } from '@/stores/countries'
 import { usePagination } from '@/composables/usePagination'
 import SkeletonCard from '@/components/SkeletonCard.vue'
+import { BaseButton, BaseInput } from '@/components/ui'
 
 // Async component for better code splitting
 const CountryCard = defineAsyncComponent(() => import('@/components/CountryCard.vue'))

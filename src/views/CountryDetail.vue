@@ -2,13 +2,17 @@
   <div class="min-h-screen bg-[#F8F9FA] dark:bg-black transition-colors duration-300">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <!-- Back Button -->
-      <button
+      <BaseButton
+        variant="ghost"
+        size="md"
         @click="router.back()"
-        class="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 mb-6 transition-colors duration-200"
+        class="mb-6"
       >
-        <ArrowLeft class="w-5 h-5" />
-        <span>{{ $t('countryDetail.backToExplorer') }}</span>
-      </button>
+        <template #icon-left>
+          <ArrowLeft class="w-5 h-5" />
+        </template>
+        {{ $t('countryDetail.backToExplorer') }}
+      </BaseButton>
 
       <LoadingSpinner v-if="loading" />
 
@@ -24,23 +28,29 @@
                 class="w-full h-full object-cover"
               />
               <div class="absolute top-4 right-4 flex space-x-2">
-                <button
+                <BaseButton
+                  variant="ghost"
+                  size="md"
+                  rounded
                   @click="toggleFavorite"
-                  class="p-3 bg-white/90 dark:bg-[#1a1a1a]/90 rounded-full hover:bg-white dark:hover:bg-gray-800 transition-colors duration-200 shadow-lg"
+                  class="bg-white/90 dark:bg-[#1a1a1a]/90 hover:bg-white dark:hover:bg-gray-800 shadow-lg"
                 >
                   <Heart
                     class="w-6 h-6"
                     :class="isFavorite ? 'text-red-500' : 'text-gray-400'"
                     :fill="isFavorite ? 'currentColor' : 'none'"
                   />
-                </button>
-                <button
+                </BaseButton>
+                <BaseButton
                   v-if="!isInComparison && canAddToComparison"
+                  variant="ghost"
+                  size="md"
+                  rounded
                   @click="addToComparison"
-                  class="p-3 bg-white/90 dark:bg-[#1a1a1a]/90 rounded-full hover:bg-white dark:hover:bg-gray-800 transition-colors duration-200 shadow-lg"
+                  class="bg-white/90 dark:bg-[#1a1a1a]/90 hover:bg-white dark:hover:bg-gray-800 shadow-lg"
                 >
-                  <GitCompare class="w-6 h-6 text-gray-600 dark:text-gray-400" />
-                </button>
+                  <GitCompare class="w-6 h-6" />
+                </BaseButton>
               </div>
             </div>
 
@@ -210,12 +220,14 @@
       <div v-else class="text-center py-12">
         <AlertCircle class="w-16 h-16 text-red-500 mx-auto mb-4" />
         <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{{ $t('countryDetail.countryNotFound') }}</h3>
-        <button
+        <BaseButton
+          variant="primary"
+          size="lg"
           @click="router.push('/')"
-          class="mt-4 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors duration-200"
+          class="mt-4"
         >
           {{ $t('countryDetail.backToExplorer') }}
-        </button>
+        </BaseButton>
       </div>
     </div>
   </div>
@@ -246,6 +258,7 @@ import { useFavoritesStore } from '@/stores/favorites'
 import { useCountryName } from '@/composables/useCountryName'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import type { Country } from '@/types/country'
+import { BaseButton } from '@/components/ui'
 
 interface Props {
   code: string

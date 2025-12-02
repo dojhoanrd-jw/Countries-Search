@@ -33,13 +33,16 @@
       <div v-else class="space-y-8">
         <!-- Action Buttons -->
         <div class="flex justify-end">
-          <button
+          <BaseButton
+            variant="danger"
+            size="md"
             @click="clearComparison"
-            class="flex items-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors duration-200"
           >
-            <X class="w-4 h-4" />
-            <span>{{ $t('compare.clearAll') }}</span>
-          </button>
+            <template #icon-left>
+              <X class="w-4 h-4" />
+            </template>
+            {{ $t('compare.clearAll') }}
+          </BaseButton>
         </div>
 
         <!-- Countries Cards -->
@@ -49,12 +52,15 @@
             :key="country.cca3"
             class="bg-white dark:bg-[#1a1a1a] rounded-lg shadow-md overflow-hidden relative group"
           >
-            <button
+            <BaseButton
               @click="removeFromComparison(country.cca3)"
-              class="absolute top-2 right-2 p-2 bg-red-500 hover:bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 z-10"
+              variant="danger"
+              size="sm"
+              rounded
+              class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-200 z-10"
             >
               <X class="w-4 h-4" />
-            </button>
+            </BaseButton>
 
             <img
               :src="country.flags.svg"
@@ -265,6 +271,7 @@ import { useCountriesStore } from '@/stores/countries'
 import { useThemeStore } from '@/stores/theme'
 import { useCountryName } from '@/composables/useCountryName'
 import type { Country } from '@/types/country'
+import { BaseButton } from '@/components/ui'
 
 Chart.register(...registerables)
 

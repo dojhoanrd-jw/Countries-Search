@@ -34,7 +34,7 @@
             >
               <Heart class="w-4 h-4" :fill="favoritesCount > 0 ? 'currentColor' : 'none'" />
               <span>{{ $t('nav.favorites') }}</span>
-              <span v-if="favoritesCount > 0" class="badge">{{ favoritesCount }}</span>
+              <BaseBadge v-if="favoritesCount > 0" variant="primary" size="sm" rounded>{{ favoritesCount }}</BaseBadge>
             </router-link>
 
             <router-link
@@ -44,35 +44,39 @@
             >
               <GitCompare class="w-4 h-4" />
               <span>{{ $t('nav.compare') }}</span>
-              <span v-if="comparisonCount > 0" class="badge">{{ comparisonCount }}</span>
+              <BaseBadge v-if="comparisonCount > 0" variant="primary" size="sm" rounded>{{ comparisonCount }}</BaseBadge>
             </router-link>
           </div>
         </div>
 
-        <div class="flex items-center space-x-4">
-          <button
+        <div class="flex items-center space-x-2">
+          <BaseButton
+            variant="ghost"
+            size="sm"
             @click="toggleLanguage"
-            class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 font-semibold text-gray-600 dark:text-gray-300"
             :title="$t('nav.language')"
           >
             {{ locale === 'es' ? 'EN' : 'ES' }}
-          </button>
+          </BaseButton>
 
-          <button
+          <BaseButton
+            variant="ghost"
+            size="sm"
             @click="toggleTheme"
-            class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
             :title="isDark ? $t('nav.theme.light') : $t('nav.theme.dark')"
           >
             <Sun v-if="isDark" class="w-5 h-5 text-yellow-500" />
             <Moon v-else class="w-5 h-5 text-gray-600" />
-          </button>
+          </BaseButton>
 
-          <button
+          <BaseButton
+            variant="ghost"
+            size="sm"
             @click="mobileMenuOpen = !mobileMenuOpen"
-            class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+            class="md:hidden"
           >
             <Menu class="w-6 h-6" />
-          </button>
+          </BaseButton>
         </div>
       </div>
     </div>
@@ -141,6 +145,7 @@ import { useFavoritesStore } from '@/stores/favorites'
 import { useI18n } from 'vue-i18n'
 import { setLocale } from '@/i18n'
 import { storeToRefs } from 'pinia'
+import { BaseButton, BaseBadge } from '@/components/ui'
 
 const themeStore = useThemeStore()
 const favoritesStore = useFavoritesStore()
@@ -175,7 +180,4 @@ const toggleLanguage = () => {
   @apply bg-primary-50 dark:bg-primary-900 text-primary-600 dark:text-primary-400;
 }
 
-.badge {
-  @apply inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white bg-primary-600 rounded-full;
-}
 </style>
