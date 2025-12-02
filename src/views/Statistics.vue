@@ -3,10 +3,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div class="mb-8">
         <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
-          Estadísticas Globales
+          {{ $t('statistics.title') }}
         </h1>
         <p class="text-gray-600 dark:text-gray-400">
-          Visualiza datos y tendencias de países alrededor del mundo
+          {{ $t('statistics.subtitle', { count: stats.totalCountries }) }}
         </p>
       </div>
 
@@ -22,7 +22,7 @@
               <Globe class="w-8 h-8 text-blue-600 dark:text-primary-400" />
               <TrendingUp class="w-5 h-5 text-blue-600" />
             </div>
-            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">Total de Países</h3>
+            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">{{ $t('statistics.cards.totalCountries') }}</h3>
             <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ stats.totalCountries }}</p>
           </div>
 
@@ -31,7 +31,7 @@
               <Users class="w-8 h-8 text-pink-600 dark:text-pink-400" />
               <TrendingUp class="w-5 h-5 text-pink-600" />
             </div>
-            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">Población Total</h3>
+            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">{{ $t('statistics.cards.totalPopulation') }}</h3>
             <p class="text-3xl font-bold text-gray-900 dark:text-white">
               {{ formatLargeNumber(stats.totalPopulation) }}
             </p>
@@ -42,7 +42,7 @@
               <User class="w-8 h-8 text-teal-600 dark:text-teal-400" />
               <BarChart3 class="w-5 h-5 text-teal-600" />
             </div>
-            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">Población Promedio</h3>
+            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">{{ $t('countryCard.population') }}</h3>
             <p class="text-3xl font-bold text-gray-900 dark:text-white">
               {{ formatLargeNumber(Math.round(stats.averagePopulation)) }}
             </p>
@@ -53,7 +53,7 @@
               <Globe2 class="w-8 h-8 text-orange-600 dark:text-orange-400" />
               <Activity class="w-5 h-5 text-orange-600" />
             </div>
-            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">Regiones</h3>
+            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">{{ $t('countryCard.region') }}</h3>
             <p class="text-3xl font-bold text-gray-900 dark:text-white">
               {{ Object.keys(stats.regionDistribution).length }}
             </p>
@@ -64,14 +64,14 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="chart-card">
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">
-              Distribución de Países por Región
+              {{ $t('statistics.charts.countriesByRegion') }}
             </h3>
             <canvas ref="regionChartRef"></canvas>
           </div>
 
           <div class="chart-card">
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">
-              Población por Región
+              {{ $t('statistics.charts.populationByRegion') }}
             </h3>
             <canvas ref="populationChartRef"></canvas>
           </div>
@@ -82,7 +82,7 @@
           <div class="chart-card">
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
               <Trophy class="w-6 h-6 mr-2 text-yellow-500" />
-              Top 10 Países Más Poblados
+              {{ $t('statistics.charts.topByPopulation') }}
             </h3>
             <canvas ref="topPopulationChartRef"></canvas>
           </div>
@@ -90,7 +90,7 @@
           <div class="chart-card">
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
               <Maximize class="w-6 h-6 mr-2 text-green-500" />
-              Top 10 Países Más Grandes
+              {{ $t('statistics.charts.topByArea') }}
             </h3>
             <canvas ref="topAreaChartRef"></canvas>
           </div>
@@ -100,17 +100,17 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div v-if="stats.mostPopulated" class="record-card glass-blue border-l-4 border-blue-500">
             <Crown class="w-8 h-8 text-blue-600 dark:text-blue-400 mb-3" />
-            <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Más Poblado</h3>
-            <p class="font-bold text-gray-900 dark:text-white mb-1">{{ stats.mostPopulated.name.common }}</p>
+            <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">{{ $t('statistics.cards.mostPopulous') }}</h3>
+            <p class="font-bold text-gray-900 dark:text-white mb-1">{{ getCountryName(stats.mostPopulated) }}</p>
             <p class="text-sm text-gray-600 dark:text-gray-400">
-              {{ formatLargeNumber(stats.mostPopulated.population) }} habitantes
+              {{ formatLargeNumber(stats.mostPopulated.population) }}
             </p>
           </div>
 
           <div v-if="stats.largestCountry" class="record-card glass-turquoise border-l-4 border-teal-500">
             <Expand class="w-8 h-8 text-teal-600 dark:text-teal-400 mb-3" />
-            <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Más Grande</h3>
-            <p class="font-bold text-gray-900 dark:text-white mb-1">{{ stats.largestCountry.name.common }}</p>
+            <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">{{ $t('statistics.cards.largestCountry') }}</h3>
+            <p class="font-bold text-gray-900 dark:text-white mb-1">{{ getCountryName(stats.largestCountry) }}</p>
             <p class="text-sm text-gray-600 dark:text-gray-400">
               {{ formatLargeNumber(stats.largestCountry.area) }} km²
             </p>
@@ -118,17 +118,17 @@
 
           <div v-if="stats.leastPopulated" class="record-card glass-purple border-l-4 border-purple-500">
             <Users class="w-8 h-8 text-purple-600 dark:text-purple-400 mb-3" />
-            <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Menos Poblado</h3>
-            <p class="font-bold text-gray-900 dark:text-white mb-1">{{ stats.leastPopulated.name.common }}</p>
+            <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">{{ $t('countryCard.population') }}</h3>
+            <p class="font-bold text-gray-900 dark:text-white mb-1">{{ getCountryName(stats.leastPopulated) }}</p>
             <p class="text-sm text-gray-600 dark:text-gray-400">
-              {{ formatLargeNumber(stats.leastPopulated.population) }} habitantes
+              {{ formatLargeNumber(stats.leastPopulated.population) }}
             </p>
           </div>
 
           <div v-if="stats.smallestCountry" class="record-card glass-pink border-l-4 border-pink-500">
             <Minimize class="w-8 h-8 text-pink-600 dark:text-pink-400 mb-3" />
-            <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Más Pequeño</h3>
-            <p class="font-bold text-gray-900 dark:text-white mb-1">{{ stats.smallestCountry.name.common }}</p>
+            <h3 class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">{{ $t('countryCard.area') }}</h3>
+            <p class="font-bold text-gray-900 dark:text-white mb-1">{{ getCountryName(stats.smallestCountry) }}</p>
             <p class="text-sm text-gray-600 dark:text-gray-400">
               {{ formatLargeNumber(stats.smallestCountry.area) }} km²
             </p>
@@ -159,6 +159,7 @@ import {
 } from 'lucide-vue-next'
 import { useCountriesStore } from '@/stores/countries'
 import { useThemeStore } from '@/stores/theme'
+import { useCountryName } from '@/composables/useCountryName'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 Chart.register(...registerables)
@@ -167,6 +168,7 @@ const countriesStore = useCountriesStore()
 const themeStore = useThemeStore()
 const { stats, loading, countries } = storeToRefs(countriesStore)
 const { isDark } = storeToRefs(themeStore)
+const { getCountryName } = useCountryName()
 
 const regionChartRef = ref<HTMLCanvasElement | null>(null)
 const populationChartRef = ref<HTMLCanvasElement | null>(null)

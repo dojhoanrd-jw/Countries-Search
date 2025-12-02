@@ -1,0 +1,176 @@
+{
+  "common": {
+    "search": "Buscar",
+    "filters": "Filtros",
+    "reset": "Limpiar filtros",
+    "loading": "Cargando...",
+    "error": "Error",
+    "retry": "Reintentar",
+    "close": "Cerrar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Agregar",
+    "remove": "Quitar",
+    "showMore": "Ver más",
+    "showLess": "Ver menos",
+    "noResults": "No se encontraron resultados",
+    "perPage": "Por página"
+  },
+  "nav": {
+    "dashboard": "Explorador",
+    "statistics": "Estadísticas",
+    "favorites": "Favoritos",
+    "compare": "Comparar",
+    "theme": {
+      "light": "Modo claro",
+      "dark": "Modo oscuro"
+    },
+    "language": "Idioma"
+  },
+  "dashboard": {
+    "title": "Explorador de Países",
+    "subtitle": "Descubre información detallada sobre {count} países del mundo",
+    "searchPlaceholder": "Buscar por nombre o capital...",
+    "allRegions": "Todas las regiones",
+    "sortBy": {
+      "label": "Ordenar por",
+      "name": "Ordenar por nombre",
+      "population": "Ordenar por población",
+      "area": "Ordenar por área"
+    },
+    "sortOrder": {
+      "asc": "Ascendente",
+      "desc": "Descendente"
+    },
+    "advancedFilters": "Filtros avanzados",
+    "filterByLanguage": "Filtrar por idioma...",
+    "filterByCurrency": "Filtrar por moneda...",
+    "errorLoading": "Error al cargar datos",
+    "noCountries": "No se encontraron países",
+    "tryAdjustFilters": "Intenta ajustar tus filtros de búsqueda",
+    "showing": "Mostrando {start}-{end} de {total} países",
+    "firstPage": "Primera página",
+    "previousPage": "Página anterior",
+    "nextPage": "Página siguiente",
+    "lastPage": "Última página"
+  },
+  "countryCard": {
+    "capital": "Capital",
+    "region": "Región",
+    "population": "Población",
+    "area": "Área",
+    "language": "Idioma",
+    "languages": "Idiomas",
+    "currency": "Moneda",
+    "currencies": "Monedas",
+    "viewOnMap": "Ver en mapa",
+    "addToFavorites": "Agregar a favoritos",
+    "removeFromFavorites": "Quitar de favoritos",
+    "addToComparison": "Agregar a comparación",
+    "removeFromComparison": "Quitar de comparación",
+    "notAvailable": "N/A"
+  },
+  "favorites": {
+    "title": "Países Favoritos",
+    "subtitle": "Tienes {count} países marcados como favoritos",
+    "empty": "No tienes países favoritos",
+    "emptyMessage": "Explora países y agrégalos a tus favoritos haciendo clic en el icono de corazón",
+    "goToDashboard": "Ir al explorador"
+  },
+  "compare": {
+    "title": "Comparar Países",
+    "subtitle": "Compara hasta 4 países lado a lado",
+    "empty": "No hay países para comparar",
+    "emptyMessage": "Agrega países a la comparación desde el explorador",
+    "maxReached": "Límite de comparación alcanzado (máximo 4 países)",
+    "alreadyAdded": "ya está en la comparación",
+    "addedToComparison": "agregado a la comparación",
+    "clearAll": "Limpiar todo",
+    "general": "General",
+    "geography": "Geografía",
+    "demographics": "Demografía",
+    "economy": "Economía",
+    "other": "Otros"
+  },
+  "statistics": {
+    "title": "Estadísticas Globales",
+    "subtitle": "Análisis y visualización de datos de {count} países",
+    "cards": {
+      "totalCountries": "Total de Países",
+      "totalPopulation": "Población Total",
+      "largestCountry": "País más Grande",
+      "mostPopulous": "Más Poblado"
+    },
+    "charts": {
+      "populationByRegion": "Población por Región",
+      "countriesByRegion": "Países por Región",
+      "topByPopulation": "Top 10 Países por Población",
+      "topByArea": "Top 10 Países por Área"
+    },
+    "regions": {
+      "Africa": "África",
+      "Americas": "América",
+      "Asia": "Asia",
+      "Europe": "Europa",
+      "Oceania": "Oceanía"
+    }
+  },
+  "countryDetail": {
+    "backToExplorer": "Volver al explorador",
+    "generalInfo": "Información General",
+    "officialName": "Nombre oficial",
+    "nativeName": "Nombre nativo",
+    "capital": "Capital",
+    "region": "Región",
+    "subregion": "Subregión",
+    "languages": "Idiomas",
+    "currencies": "Monedas",
+    "geography": "Geografía",
+    "area": "Área",
+    "population": "Población",
+    "borders": "Fronteras",
+    "noBorders": "Sin fronteras terrestres",
+    "coordinates": "Coordenadas",
+    "timezones": "Zonas horarias",
+    "additionalInfo": "Información Adicional",
+    "tld": "Dominio de nivel superior",
+    "callingCode": "Código de llamada",
+    "independent": "Independiente",
+    "unMember": "Miembro de la ONU",
+    "startOfWeek": "Inicio de semana",
+    "drivingSide": "Lado de conducción",
+    "yes": "Sí",
+    "no": "No",
+    "left": "Izquierda",
+    "right": "Derecha",
+    "viewOnGoogleMaps": "Ver en Google Maps",
+    "coatOfArms": "Escudo de armas",
+    "errorLoading": "Error al cargar información del país",
+    "countryNotFound": "País no encontrado"
+  },
+  "notifications": {
+    "countriesLoaded": "{count} países cargados correctamente",
+    "errorLoadingCountries": "Error al cargar los países. Por favor, intenta de nuevo.",
+    "timeoutError": "La solicitud tardó demasiado. Verifica tu conexión e intenta de nuevo.",
+    "notFoundError": "No se encontraron los datos de países. Por favor, contacta a soporte.",
+    "networkError": "Sin conexión a internet. Por favor, verifica tu red.",
+    "serverError": "Error del servidor. Por favor, intenta más tarde.",
+    "addedToFavorites": "{country} agregado a favoritos",
+    "removedFromFavorites": "{country} eliminado de favoritos",
+    "addedToComparison": "{country} agregado a la comparación",
+    "removedFromComparison": "{country} eliminado de la comparación",
+    "comparisonLimitReached": "Límite de comparación alcanzado (máximo 4 países)",
+    "alreadyInComparison": "{country} ya está en la comparación"
+  },
+  "days": {
+    "monday": "Lunes",
+    "tuesday": "Martes",
+    "wednesday": "Miércoles",
+    "thursday": "Jueves",
+    "friday": "Viernes",
+    "saturday": "Sábado",
+    "sunday": "Domingo"
+  }
+}

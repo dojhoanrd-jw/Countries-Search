@@ -4,10 +4,10 @@
       <div class="mb-8">
         <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2 flex items-center">
           <GitCompare class="w-10 h-10 mr-3 text-blue-600 dark:text-primary-400" />
-          Comparar Países
+          {{ $t('compare.title') }}
         </h1>
         <p class="text-gray-600 dark:text-gray-400">
-          {{ comparison.length }} de 4 países seleccionados para comparar
+          {{ comparison.length }} {{ $t('compare.subtitle') }}
         </p>
       </div>
 
@@ -15,17 +15,17 @@
       <div v-if="comparison.length === 0" class="text-center py-20">
         <GitCompare class="w-24 h-24 text-gray-300 dark:text-gray-700 mx-auto mb-6" />
         <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-3">
-          No hay países para comparar
+          {{ $t('compare.empty') }}
         </h3>
         <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
-          Agrega países a la comparación desde el dashboard o vista de favoritos (hasta 4 países)
+          {{ $t('compare.emptyMessage') }}
         </p>
         <router-link
           to="/"
           class="inline-flex items-center space-x-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors duration-200"
         >
           <Globe class="w-5 h-5" />
-          <span>Explorar países</span>
+          <span>{{ $t('nav.dashboard') }}</span>
         </router-link>
       </div>
 
@@ -38,7 +38,7 @@
             class="flex items-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors duration-200"
           >
             <X class="w-4 h-4" />
-            <span>Limpiar comparación</span>
+            <span>{{ $t('compare.clearAll') }}</span>
           </button>
         </div>
 
@@ -58,13 +58,13 @@
 
             <img
               :src="country.flags.svg"
-              :alt="`Bandera de ${country.name.common}`"
+              :alt="`Bandera de ${getCountryName(country)}`"
               class="w-full h-32 object-cover"
             />
 
             <div class="p-4">
               <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 line-clamp-1">
-                {{ country.name.common }}
+                {{ getCountryName(country) }}
               </h3>
               <p class="text-sm text-gray-600 dark:text-gray-400">{{ country.region }}</p>
             </div>
@@ -78,14 +78,14 @@
               <thead class="bg-gray-100 dark:bg-gray-700">
                 <tr>
                   <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
-                    Atributo
+                    {{ $t('countryCard.region') }}
                   </th>
                   <th
                     v-for="country in comparison"
                     :key="country.cca3"
                     class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white"
                   >
-                    {{ country.name.common }}
+                    {{ getCountryName(country) }}
                   </th>
                 </tr>
               </thead>
@@ -94,7 +94,7 @@
                   <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center space-x-2">
                       <MapPin class="w-4 h-4 text-blue-600" />
-                      <span>Capital</span>
+                      <span>{{ $t('countryCard.capital') }}</span>
                     </div>
                   </td>
                   <td
@@ -102,7 +102,7 @@
                     :key="`capital-${country.cca3}`"
                     class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400"
                   >
-                    {{ country.capital?.join(', ') || 'N/A' }}
+                    {{ country.capital?.join(', ') || $t('countryCard.notAvailable') }}
                   </td>
                 </tr>
 
@@ -110,7 +110,7 @@
                   <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center space-x-2">
                       <Users class="w-4 h-4 text-blue-600" />
-                      <span>Población</span>
+                      <span>{{ $t('countryCard.population') }}</span>
                     </div>
                   </td>
                   <td
@@ -126,7 +126,7 @@
                   <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center space-x-2">
                       <Maximize class="w-4 h-4 text-green-600" />
-                      <span>Área (km²)</span>
+                      <span>{{ $t('countryCard.area') }} (km²)</span>
                     </div>
                   </td>
                   <td
@@ -142,7 +142,7 @@
                   <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center space-x-2">
                       <Activity class="w-4 h-4 text-purple-600" />
-                      <span>Densidad (hab/km²)</span>
+                      <span>{{ $t('countryDetail.population') }}</span>
                     </div>
                   </td>
                   <td
@@ -158,7 +158,7 @@
                   <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center space-x-2">
                       <Globe2 class="w-4 h-4 text-blue-600" />
-                      <span>Región</span>
+                      <span>{{ $t('countryCard.region') }}</span>
                     </div>
                   </td>
                   <td
@@ -174,7 +174,7 @@
                   <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center space-x-2">
                       <Languages class="w-4 h-4 text-green-600" />
-                      <span>Idiomas</span>
+                      <span>{{ $t('countryCard.languages') }}</span>
                     </div>
                   </td>
                   <td
@@ -182,7 +182,7 @@
                     :key="`lang-${country.cca3}`"
                     class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400"
                   >
-                    {{ country.languages ? Object.values(country.languages).slice(0, 3).join(', ') : 'N/A' }}
+                    {{ country.languages ? Object.values(country.languages).slice(0, 3).join(', ') : $t('countryCard.notAvailable') }}
                   </td>
                 </tr>
 
@@ -190,7 +190,7 @@
                   <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center space-x-2">
                       <DollarSign class="w-4 h-4 text-blue-600" />
-                      <span>Moneda</span>
+                      <span>{{ $t('countryCard.currency') }}</span>
                     </div>
                   </td>
                   <td
@@ -200,8 +200,8 @@
                   >
                     {{
                       country.currencies
-                        ? Object.values(country.currencies)[0]?.name || 'N/A'
-                        : 'N/A'
+                        ? Object.values(country.currencies)[0]?.name || $t('countryCard.notAvailable')
+                        : $t('countryCard.notAvailable')
                     }}
                   </td>
                 </tr>
@@ -210,7 +210,7 @@
                   <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
                     <div class="flex items-center space-x-2">
                       <MapPinned class="w-4 h-4 text-green-600" />
-                      <span>Fronteras</span>
+                      <span>{{ $t('countryDetail.borders') }}</span>
                     </div>
                   </td>
                   <td
@@ -229,12 +229,12 @@
         <!-- Visual Comparison Charts -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="bg-white dark:bg-[#1a1a1a] rounded-lg shadow-lg p-6">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Comparación de Población</h3>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">{{ $t('countryCard.population') }}</h3>
             <canvas ref="populationChartRef"></canvas>
           </div>
 
           <div class="bg-white dark:bg-[#1a1a1a] rounded-lg shadow-lg p-6">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Comparación de Área</h3>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">{{ $t('countryCard.area') }}</h3>
             <canvas ref="areaChartRef"></canvas>
           </div>
         </div>
@@ -262,6 +262,7 @@ import {
 } from 'lucide-vue-next'
 import { useFavoritesStore } from '@/stores/favorites'
 import { useThemeStore } from '@/stores/theme'
+import { useCountryName } from '@/composables/useCountryName'
 import type { Country } from '@/types/country'
 
 Chart.register(...registerables)
@@ -271,6 +272,7 @@ const themeStore = useThemeStore()
 const { comparison } = storeToRefs(favoritesStore)
 const { isDark } = storeToRefs(themeStore)
 const { clearComparison, removeFromComparison } = favoritesStore
+const { getCountryName } = useCountryName()
 
 const populationChartRef = ref<HTMLCanvasElement | null>(null)
 const areaChartRef = ref<HTMLCanvasElement | null>(null)
@@ -297,7 +299,7 @@ const createCharts = () => {
       populationChart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: comparison.value.map(c => c.name.common),
+          labels: comparison.value.map(c => getCountryName(c)),
           datasets: [{
             label: 'Población',
             data: comparison.value.map(c => c.population),
@@ -334,7 +336,7 @@ const createCharts = () => {
       areaChart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: comparison.value.map(c => c.name.common),
+          labels: comparison.value.map(c => getCountryName(c)),
           datasets: [{
             label: 'Área (km²)',
             data: comparison.value.map(c => c.area),

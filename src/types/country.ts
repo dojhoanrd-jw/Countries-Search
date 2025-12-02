@@ -31,6 +31,7 @@ export interface Country {
   borders?: string[]
   tld?: string[]
   latlng?: number[]
+  translations?: Record<string, { common: string; official: string }>
 }
 
 export interface CountryFilters {

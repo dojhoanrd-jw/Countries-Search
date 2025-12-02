@@ -1,0 +1,176 @@
+{
+  "common": {
+    "search": "Search",
+    "filters": "Filters",
+    "reset": "Clear filters",
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "close": "Close",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "remove": "Remove",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "noResults": "No results found",
+    "perPage": "Per page"
+  },
+  "nav": {
+    "dashboard": "Explorer",
+    "statistics": "Statistics",
+    "favorites": "Favorites",
+    "compare": "Compare",
+    "theme": {
+      "light": "Light mode",
+      "dark": "Dark mode"
+    },
+    "language": "Language"
+  },
+  "dashboard": {
+    "title": "Countries Explorer",
+    "subtitle": "Discover detailed information about {count} countries around the world",
+    "searchPlaceholder": "Search by name or capital...",
+    "allRegions": "All regions",
+    "sortBy": {
+      "label": "Sort by",
+      "name": "Sort by name",
+      "population": "Sort by population",
+      "area": "Sort by area"
+    },
+    "sortOrder": {
+      "asc": "Ascending",
+      "desc": "Descending"
+    },
+    "advancedFilters": "Advanced filters",
+    "filterByLanguage": "Filter by language...",
+    "filterByCurrency": "Filter by currency...",
+    "errorLoading": "Error loading data",
+    "noCountries": "No countries found",
+    "tryAdjustFilters": "Try adjusting your search filters",
+    "showing": "Showing {start}-{end} of {total} countries",
+    "firstPage": "First page",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "lastPage": "Last page"
+  },
+  "countryCard": {
+    "capital": "Capital",
+    "region": "Region",
+    "population": "Population",
+    "area": "Area",
+    "language": "Language",
+    "languages": "Languages",
+    "currency": "Currency",
+    "currencies": "Currencies",
+    "viewOnMap": "View on map",
+    "addToFavorites": "Add to favorites",
+    "removeFromFavorites": "Remove from favorites",
+    "addToComparison": "Add to comparison",
+    "removeFromComparison": "Remove from comparison",
+    "notAvailable": "N/A"
+  },
+  "favorites": {
+    "title": "Favorite Countries",
+    "subtitle": "You have {count} countries marked as favorites",
+    "empty": "No favorite countries",
+    "emptyMessage": "Explore countries and add them to your favorites by clicking the heart icon",
+    "goToDashboard": "Go to explorer"
+  },
+  "compare": {
+    "title": "Compare Countries",
+    "subtitle": "Compare up to 4 countries side by side",
+    "empty": "No countries to compare",
+    "emptyMessage": "Add countries to comparison from the explorer",
+    "maxReached": "Comparison limit reached (maximum 4 countries)",
+    "alreadyAdded": "is already in comparison",
+    "addedToComparison": "added to comparison",
+    "clearAll": "Clear all",
+    "general": "General",
+    "geography": "Geography",
+    "demographics": "Demographics",
+    "economy": "Economy",
+    "other": "Other"
+  },
+  "statistics": {
+    "title": "Global Statistics",
+    "subtitle": "Analysis and visualization of data from {count} countries",
+    "cards": {
+      "totalCountries": "Total Countries",
+      "totalPopulation": "Total Population",
+      "largestCountry": "Largest Country",
+      "mostPopulous": "Most Populous"
+    },
+    "charts": {
+      "populationByRegion": "Population by Region",
+      "countriesByRegion": "Countries by Region",
+      "topByPopulation": "Top 10 Countries by Population",
+      "topByArea": "Top 10 Countries by Area"
+    },
+    "regions": {
+      "Africa": "Africa",
+      "Americas": "Americas",
+      "Asia": "Asia",
+      "Europe": "Europe",
+      "Oceania": "Oceania"
+    }
+  },
+  "countryDetail": {
+    "backToExplorer": "Back to explorer",
+    "generalInfo": "General Information",
+    "officialName": "Official name",
+    "nativeName": "Native name",
+    "capital": "Capital",
+    "region": "Region",
+    "subregion": "Subregion",
+    "languages": "Languages",
+    "currencies": "Currencies",
+    "geography": "Geography",
+    "area": "Area",
+    "population": "Population",
+    "borders": "Borders",
+    "noBorders": "No land borders",
+    "coordinates": "Coordinates",
+    "timezones": "Timezones",
+    "additionalInfo": "Additional Information",
+    "tld": "Top-level domain",
+    "callingCode": "Calling code",
+    "independent": "Independent",
+    "unMember": "UN Member",
+    "startOfWeek": "Start of week",
+    "drivingSide": "Driving side",
+    "yes": "Yes",
+    "no": "No",
+    "left": "Left",
+    "right": "Right",
+    "viewOnGoogleMaps": "View on Google Maps",
+    "coatOfArms": "Coat of arms",
+    "errorLoading": "Error loading country information",
+    "countryNotFound": "Country not found"
+  },
+  "notifications": {
+    "countriesLoaded": "{count} countries loaded successfully",
+    "errorLoadingCountries": "Error loading countries. Please try again.",
+    "timeoutError": "Request timed out. Check your connection and try again.",
+    "notFoundError": "Countries data not found. Please contact support.",
+    "networkError": "No internet connection. Please check your network.",
+    "serverError": "Server error. Please try again later.",
+    "addedToFavorites": "{country} added to favorites",
+    "removedFromFavorites": "{country} removed from favorites",
+    "addedToComparison": "{country} added to comparison",
+    "removedFromComparison": "{country} removed from comparison",
+    "comparisonLimitReached": "Comparison limit reached (maximum 4 countries)",
+    "alreadyInComparison": "{country} is already in comparison"
+  },
+  "days": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday"
+  }
+}

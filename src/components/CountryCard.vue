@@ -6,7 +6,7 @@
     <div class="relative h-48">
       <OptimizedImage
         :src="country.flags.svg"
-        :alt="country.flags.alt || `Bandera de ${country.name.common}`"
+        :alt="country.flags.alt || `Bandera de ${countryName}`"
         aspect-ratio="3/2"
         container-class="relative h-full overflow-hidden bg-gray-200 dark:bg-gray-700"
         image-class="group-hover:scale-110 transition-transform duration-300"
@@ -14,7 +14,7 @@
       <button
         @click.stop="toggleFavorite"
         class="absolute top-3 right-3 p-2 bg-white/90 dark:bg-[#1a1a1a]/90 rounded-full hover:bg-white dark:hover:bg-gray-800 transition-colors duration-200 shadow-lg"
-        :title="isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'"
+        :title="isFavorite ? $t('countryCard.removeFromFavorites') : $t('countryCard.addToFavorites')"
       >
         <Heart
           class="w-5 h-5 transition-colors duration-200"
@@ -26,49 +26,49 @@
 
     <div class="p-6">
       <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-1">
-        {{ country.name.common }}
+        {{ countryName }}
       </h3>
 
       <div class="space-y-2 text-sm">
         <div class="flex items-center text-gray-600 dark:text-gray-400">
           <MapPin class="w-4 h-4 mr-2 flex-shrink-0 text-primary-600 dark:text-primary-400" />
           <span class="line-clamp-1">
-            <strong>Capital:</strong> {{ formatCapital }}
+            <strong>{{ $t('countryCard.capital') }}:</strong> {{ formatCapital }}
           </span>
         </div>
 
         <div class="flex items-center text-gray-600 dark:text-gray-400">
           <Globe2 class="w-4 h-4 mr-2 flex-shrink-0 text-primary-600 dark:text-primary-400" />
           <span>
-            <strong>Región:</strong> {{ country.region }}
+            <strong>{{ $t('countryCard.region') }}:</strong> {{ country.region }}
           </span>
         </div>
 
         <div class="flex items-center text-gray-600 dark:text-gray-400">
           <Users class="w-4 h-4 mr-2 flex-shrink-0 text-primary-600 dark:text-primary-400" />
           <span>
-            <strong>Población:</strong> {{ formatPopulation }}
+            <strong>{{ $t('countryCard.population') }}:</strong> {{ formatPopulation }}
           </span>
         </div>
 
         <div class="flex items-center text-gray-600 dark:text-gray-400">
           <Maximize class="w-4 h-4 mr-2 flex-shrink-0 text-primary-600 dark:text-primary-400" />
           <span>
-            <strong>Área:</strong> {{ formatArea }}
+            <strong>{{ $t('countryCard.area') }}:</strong> {{ formatArea }}
           </span>
         </div>
 
         <div v-if="formatLanguages" class="flex items-start text-gray-600 dark:text-gray-400">
           <Languages class="w-4 h-4 mr-2 flex-shrink-0 text-primary-600 dark:text-primary-400 mt-0.5" />
           <span class="line-clamp-1">
-            <strong>Idioma:</strong> {{ formatLanguages }}
+            <strong>{{ $t('countryCard.language') }}:</strong> {{ formatLanguages }}
           </span>
         </div>
 
         <div v-if="formatCurrency" class="flex items-start text-gray-600 dark:text-gray-400">
           <DollarSign class="w-4 h-4 mr-2 flex-shrink-0 text-primary-600 dark:text-primary-400 mt-0.5" />
           <span class="line-clamp-1">
-            <strong>Moneda:</strong> {{ formatCurrency }}
+            <strong>{{ $t('countryCard.currency') }}:</strong> {{ formatCurrency }}
           </span>
         </div>
       </div>
@@ -82,7 +82,7 @@
           class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 text-sm font-medium flex items-center space-x-1 transition-colors duration-200"
         >
           <Map class="w-4 h-4" />
-          <span>Ver en mapa</span>
+          <span>{{ $t('countryCard.viewOnMap') }}</span>
           <ExternalLink class="w-3 h-3" />
         </a>
 
@@ -91,7 +91,7 @@
           @click.stop="addToComparison"
           :disabled="!canAddToComparison"
           class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-          title="Agregar a comparación"
+          :title="$t('countryCard.addToComparison')"
         >
           <GitCompare class="w-4 h-4 text-gray-600 dark:text-gray-400" />
         </button>
@@ -99,7 +99,7 @@
           v-else
           @click.stop="removeFromComparison"
           class="p-2 rounded-lg bg-primary-100 dark:bg-primary-900 hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors duration-200"
-          title="Quitar de comparación"
+          :title="$t('countryCard.removeFromComparison')"
         >
           <GitCompare class="w-4 h-4 text-primary-600 dark:text-primary-400" />
         </button>
@@ -113,6 +113,7 @@ import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { Heart, MapPin, Globe2, Users, Maximize, Languages, DollarSign, Map, ExternalLink, GitCompare } from 'lucide-vue-next'
 import { useFavoritesStore } from '@/stores/favorites'
+import { useCountryName } from '@/composables/useCountryName'
 import { storeToRefs } from 'pinia'
 import type { Country } from '@/types/country'
 import OptimizedImage from './OptimizedImage.vue'
@@ -125,7 +126,9 @@ const props = defineProps<Props>()
 const router = useRouter()
 const favoritesStore = useFavoritesStore()
 const { canAddToComparison } = storeToRefs(favoritesStore)
+const { getCountryName } = useCountryName()
 
+const countryName = computed(() => getCountryName(props.country))
 const isFavorite = computed(() => favoritesStore.isFavorite(props.country.cca3))
 const isInComparison = computed(() => favoritesStore.isInComparison(props.country.cca3))
 

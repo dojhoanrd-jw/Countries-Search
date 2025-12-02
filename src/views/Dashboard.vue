@@ -4,10 +4,10 @@
       <!-- Header -->
       <div class="mb-8">
         <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
-          Explorador de Países
+          {{ $t('dashboard.title') }}
         </h1>
         <p class="text-gray-600 dark:text-gray-400">
-          Descubre información detallada sobre {{ filteredCountries.length }} países del mundo
+          {{ $t('dashboard.subtitle', { count: filteredCountries.length }) }}
         </p>
       </div>
 
@@ -19,7 +19,7 @@
           <input
             v-model="searchQuery"
             type="text"
-            placeholder="Buscar por nombre o capital..."
+            :placeholder="$t('dashboard.searchPlaceholder')"
             class="w-full pl-12 pr-4 py-3 bg-white dark:bg-[#1a1a1a] border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all duration-200"
           />
         </div>
@@ -33,7 +33,7 @@
               v-model="selectedRegion"
               class="w-full pl-10 pr-4 py-3 bg-white dark:bg-[#1a1a1a] border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none appearance-none cursor-pointer transition-all duration-200"
             >
-              <option value="">Todas las regiones</option>
+              <option value="">{{ $t('dashboard.allRegions') }}</option>
               <option v-for="region in regions" :key="region" :value="region">
                 {{ region }}
               </option>
@@ -47,9 +47,9 @@
               v-model="sortByValue"
               class="w-full pl-10 pr-4 py-3 bg-white dark:bg-[#1a1a1a] border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none appearance-none cursor-pointer transition-all duration-200"
             >
-              <option value="name">Ordenar por nombre</option>
-              <option value="population">Ordenar por población</option>
-              <option value="area">Ordenar por área</option>
+              <option value="name">{{ $t('dashboard.sortBy.name') }}</option>
+              <option value="population">{{ $t('dashboard.sortBy.population') }}</option>
+              <option value="area">{{ $t('dashboard.sortBy.area') }}</option>
             </select>
           </div>
 
@@ -59,7 +59,7 @@
             class="flex items-center justify-center space-x-2 px-4 py-3 bg-white dark:bg-[#1a1a1a] border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200"
           >
             <component :is="sortOrder === 'asc' ? ArrowUp : ArrowDown" class="w-4 h-4" />
-            <span>{{ sortOrder === 'asc' ? 'Ascendente' : 'Descendente' }}</span>
+            <span>{{ sortOrder === 'asc' ? $t('dashboard.sortOrder.asc') : $t('dashboard.sortOrder.desc') }}</span>
           </button>
 
           <!-- Reset Filters -->
@@ -68,7 +68,7 @@
             class="flex items-center justify-center space-x-2 px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-all duration-200"
           >
             <RotateCcw class="w-4 h-4" />
-            <span>Limpiar filtros</span>
+            <span>{{ $t('common.reset') }}</span>
           </button>
         </div>
 
@@ -78,7 +78,7 @@
             @click="showAdvancedFilters = !showAdvancedFilters"
             class="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
           >
-            <span class="font-medium text-gray-900 dark:text-white">Filtros avanzados</span>
+            <span class="font-medium text-gray-900 dark:text-white">{{ $t('dashboard.advancedFilters') }}</span>
             <ChevronDown
               class="w-5 h-5 text-gray-500 transition-transform duration-200"
               :class="{ 'rotate-180': showAdvancedFilters }"
@@ -98,13 +98,13 @@
                 <input
                   v-model="languageFilter"
                   type="text"
-                  placeholder="Filtrar por idioma..."
+                  :placeholder="$t('dashboard.filterByLanguage')"
                   class="px-4 py-2 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
                 />
                 <input
                   v-model="currencyFilter"
                   type="text"
-                  placeholder="Filtrar por moneda..."
+                  :placeholder="$t('dashboard.filterByCurrency')"
                   class="px-4 py-2 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
                 />
               </div>
@@ -121,13 +121,13 @@
       <!-- Error State -->
       <div v-else-if="error" class="text-center py-12">
         <AlertCircle class="w-16 h-16 text-red-500 mx-auto mb-4" />
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Error al cargar datos</h3>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{{ $t('dashboard.errorLoading') }}</h3>
         <p class="text-gray-600 dark:text-gray-400 mb-4">{{ error }}</p>
         <button
           @click="fetchCountries"
           class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors duration-200"
         >
-          Reintentar
+          {{ $t('common.retry') }}
         </button>
       </div>
 
@@ -144,7 +144,7 @@
         <!-- Pagination Controls -->
         <div v-if="totalPages > 1" class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div class="text-sm text-gray-600 dark:text-gray-400">
-            Mostrando {{ startIndex + 1 }}-{{ endIndex }} de {{ filteredCountries.length }} países
+            {{ $t('dashboard.showing', { start: startIndex + 1, end: endIndex, total: filteredCountries.length }) }}
           </div>
 
           <div class="flex items-center space-x-2">
@@ -152,7 +152,7 @@
               @click="goToFirstPage"
               :disabled="currentPage === 1"
               class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-              title="Primera página"
+              :title="$t('dashboard.firstPage')"
             >
               <ChevronsLeft class="w-4 h-4" />
             </button>
@@ -161,7 +161,7 @@
               @click="prevPage"
               :disabled="currentPage === 1"
               class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-              title="Página anterior"
+              :title="$t('dashboard.previousPage')"
             >
               <ChevronLeft class="w-4 h-4" />
             </button>
@@ -186,7 +186,7 @@
               @click="nextPage"
               :disabled="currentPage === totalPages"
               class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-              title="Página siguiente"
+              :title="$t('dashboard.nextPage')"
             >
               <ChevronRight class="w-4 h-4" />
             </button>
@@ -195,7 +195,7 @@
               @click="goToLastPage"
               :disabled="currentPage === totalPages"
               class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-              title="Última página"
+              :title="$t('dashboard.lastPage')"
             >
               <ChevronsRight class="w-4 h-4" />
             </button>
@@ -203,7 +203,7 @@
 
           <div class="flex items-center space-x-2">
             <label for="itemsPerPage" class="text-sm text-gray-600 dark:text-gray-400">
-              Por página:
+              {{ $t('common.perPage') }}:
             </label>
             <select
               id="itemsPerPage"
@@ -222,13 +222,13 @@
       <!-- Empty State -->
       <div v-else class="text-center py-12">
         <Globe class="w-16 h-16 text-gray-400 mx-auto mb-4" />
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">No se encontraron países</h3>
-        <p class="text-gray-600 dark:text-gray-400 mb-4">Intenta ajustar tus filtros de búsqueda</p>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{{ $t('dashboard.noCountries') }}</h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">{{ $t('dashboard.tryAdjustFilters') }}</p>
         <button
           @click="resetAllFilters"
           class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors duration-200"
         >
-          Limpiar filtros
+          {{ $t('common.reset') }}
         </button>
       </div>
     </div>

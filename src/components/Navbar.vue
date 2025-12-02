@@ -15,7 +15,7 @@
               :class="{ 'active': $route.name === 'dashboard' }"
             >
               <LayoutDashboard class="w-4 h-4" />
-              <span>Dashboard</span>
+              <span>{{ $t('nav.dashboard') }}</span>
             </router-link>
 
             <router-link
@@ -24,7 +24,7 @@
               :class="{ 'active': $route.name === 'statistics' }"
             >
               <BarChart3 class="w-4 h-4" />
-              <span>Estadísticas</span>
+              <span>{{ $t('nav.statistics') }}</span>
             </router-link>
 
             <router-link
@@ -33,7 +33,7 @@
               :class="{ 'active': $route.name === 'favorites' }"
             >
               <Heart class="w-4 h-4" :fill="favoritesCount > 0 ? 'currentColor' : 'none'" />
-              <span>Favoritos</span>
+              <span>{{ $t('nav.favorites') }}</span>
               <span v-if="favoritesCount > 0" class="badge">{{ favoritesCount }}</span>
             </router-link>
 
@@ -43,7 +43,7 @@
               :class="{ 'active': $route.name === 'compare' }"
             >
               <GitCompare class="w-4 h-4" />
-              <span>Comparar</span>
+              <span>{{ $t('nav.compare') }}</span>
               <span v-if="comparisonCount > 0" class="badge">{{ comparisonCount }}</span>
             </router-link>
           </div>
@@ -51,9 +51,17 @@
 
         <div class="flex items-center space-x-4">
           <button
+            @click="toggleLanguage"
+            class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 font-semibold text-gray-600 dark:text-gray-300"
+            :title="$t('nav.language')"
+          >
+            {{ locale === 'es' ? 'EN' : 'ES' }}
+          </button>
+
+          <button
             @click="toggleTheme"
             class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
-            :title="isDark ? 'Modo claro' : 'Modo oscuro'"
+            :title="isDark ? $t('nav.theme.light') : $t('nav.theme.dark')"
           >
             <Sun v-if="isDark" class="w-5 h-5 text-yellow-500" />
             <Moon v-else class="w-5 h-5 text-gray-600" />
@@ -87,7 +95,7 @@
             :class="{ 'active': $route.name === 'dashboard' }"
           >
             <LayoutDashboard class="w-4 h-4" />
-            <span>Dashboard</span>
+            <span>{{ $t('nav.dashboard') }}</span>
           </router-link>
 
           <router-link
@@ -97,7 +105,7 @@
             :class="{ 'active': $route.name === 'statistics' }"
           >
             <BarChart3 class="w-4 h-4" />
-            <span>Estadísticas</span>
+            <span>{{ $t('nav.statistics') }}</span>
           </router-link>
 
           <router-link
@@ -107,7 +115,7 @@
             :class="{ 'active': $route.name === 'favorites' }"
           >
             <Heart class="w-4 h-4" />
-            <span>Favoritos ({{ favoritesCount }})</span>
+            <span>{{ $t('nav.favorites') }} ({{ favoritesCount }})</span>
           </router-link>
 
           <router-link
@@ -117,7 +125,7 @@
             :class="{ 'active': $route.name === 'compare' }"
           >
             <GitCompare class="w-4 h-4" />
-            <span>Comparar ({{ comparisonCount }})</span>
+            <span>{{ $t('nav.compare') }} ({{ comparisonCount }})</span>
           </router-link>
         </div>
       </div>
@@ -130,16 +138,24 @@ import { ref } from 'vue'
 import { Globe, LayoutDashboard, BarChart3, Heart, GitCompare, Sun, Moon, Menu } from 'lucide-vue-next'
 import { useThemeStore } from '@/stores/theme'
 import { useFavoritesStore } from '@/stores/favorites'
+import { useI18n } from 'vue-i18n'
+import { setLocale } from '@/i18n'
 import { storeToRefs } from 'pinia'
 
 const themeStore = useThemeStore()
 const favoritesStore = useFavoritesStore()
+const { locale } = useI18n()
 
 const { isDark } = storeToRefs(themeStore)
 const { favoritesCount, comparisonCount } = storeToRefs(favoritesStore)
 const { toggleTheme } = themeStore
 
 const mobileMenuOpen = ref(false)
+
+const toggleLanguage = () => {
+  const newLocale = locale.value === 'es' ? 'en' : 'es'
+  setLocale(newLocale as 'es' | 'en')
+}
 </script>
 
 <style scoped>
