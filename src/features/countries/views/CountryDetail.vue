@@ -253,12 +253,12 @@ import {
   MapPinned,
   AlertCircle,
 } from 'lucide-vue-next'
-import { useCountriesStore } from '@/stores/countries'
-import { useFavoritesStore } from '@/stores/favorites'
-import { useCountryName } from '@/composables/useCountryName'
-import LoadingSpinner from '@/components/LoadingSpinner.vue'
-import type { Country } from '@/types/country'
-import { BaseButton } from '@/components/ui'
+import { useCountriesStore } from '@/features/countries'
+import { useFavoritesStore } from '@/features/favorites'
+import { useCountryName } from '@/features/countries'
+import LoadingSpinner from '@/shared/components/LoadingSpinner.vue'
+import type { Country } from '@/core/types'
+import { BaseButton } from '@/shared/components'
 
 interface Props {
   code: string

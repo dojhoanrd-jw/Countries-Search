@@ -117,12 +117,12 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { Heart, MapPin, Globe2, Users, Maximize, Languages, DollarSign, Map, ExternalLink, GitCompare } from 'lucide-vue-next'
-import { useFavoritesStore } from '@/stores/favorites'
-import { useCountryName } from '@/composables/useCountryName'
+import { useFavoritesStore } from '@/features/favorites'
+import { useCountryName } from '@/features/countries'
 import { storeToRefs } from 'pinia'
-import type { Country } from '@/types/country'
-import OptimizedImage from './OptimizedImage.vue'
-import { BaseButton } from '@/components/ui'
+import type { Country } from '@/core/types'
+import OptimizedImage from '@/shared/components/OptimizedImage.vue'
+import { BaseButton } from '@/shared/components'
 
 interface Props {
   country: Country

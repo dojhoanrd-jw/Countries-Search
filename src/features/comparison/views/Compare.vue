@@ -266,12 +266,12 @@ import {
   DollarSign,
   MapPinned,
 } from 'lucide-vue-next'
-import { useFavoritesStore } from '@/stores/favorites'
-import { useCountriesStore } from '@/stores/countries'
-import { useThemeStore } from '@/stores/theme'
-import { useCountryName } from '@/composables/useCountryName'
-import type { Country } from '@/types/country'
-import { BaseButton } from '@/components/ui'
+import { useFavoritesStore } from '@/features/favorites'
+import { useCountriesStore } from '@/features/countries'
+import { useThemeStore } from '@/shared/services'
+import { useCountryName } from '@/features/countries'
+import type { Country } from '@/core/types'
+import { BaseButton } from '@/shared/components'
 
 Chart.register(...registerables)
 

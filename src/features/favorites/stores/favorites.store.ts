@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import type { Country } from '@/types/country'
-import { useNotificationsStore } from './notifications'
+import type { Country } from '@/core/types'
+import { useNotificationsStore } from '@/shared/services'
 
 export const useFavoritesStore = defineStore('favorites', () => {
   const favorites = ref<Country[]>([])

@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios'
-import type { Country } from '@/types/country'
+import type { Country } from '@/core/types'
 
 // Environment variables with fallback defaults
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://restcountries.com/v3.1'

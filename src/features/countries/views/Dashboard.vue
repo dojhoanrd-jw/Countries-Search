@@ -254,13 +254,13 @@ import {
   ChevronDown, Globe, AlertCircle, ChevronLeft, ChevronRight,
   ChevronsLeft, ChevronsRight
 } from 'lucide-vue-next'
-import { useCountriesStore } from '@/stores/countries'
-import { usePagination } from '@/composables/usePagination'
-import SkeletonCard from '@/components/SkeletonCard.vue'
-import { BaseButton, BaseInput } from '@/components/ui'
+import { useCountriesStore } from '@/features/countries'
+import { usePagination } from '@/shared/composables'
+import SkeletonCard from '@/shared/components/SkeletonCard.vue'
+import { BaseButton, BaseInput } from '@/shared/components'
 
 // Async component for better code splitting
-const CountryCard = defineAsyncComponent(() => import('@/components/CountryCard.vue'))
+const CountryCard = defineAsyncComponent(() => import('@/features/countries/components/CountryCard.vue'))
 
 const countriesStore = useCountriesStore()
 const { filteredCountries, regions, loading, error } = storeToRefs(countriesStore)

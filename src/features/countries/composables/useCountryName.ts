@@ -1,6 +1,6 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import type { Country } from '@/types/country'
+import type { Country } from '@/core/types'
 
 /**
  * Composable to get country name in current locale

@@ -44,10 +44,10 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { Heart, Globe } from 'lucide-vue-next'
-import { useFavoritesStore } from '@/stores/favorites'
-import { useCountriesStore } from '@/stores/countries'
+import { useFavoritesStore } from '@/features/favorites'
+import { useCountriesStore } from '@/features/countries'
 import { storeToRefs } from 'pinia'
-import CountryCard from '@/components/CountryCard.vue'
+import CountryCard from '@/features/countries/components/CountryCard.vue'
 
 const favoritesStore = useFavoritesStore()
 const countriesStore = useCountriesStore()

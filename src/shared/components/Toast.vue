@@ -33,7 +33,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { CheckCircle, XCircle, AlertTriangle, Info, X } from 'lucide-vue-next'
-import { useNotificationsStore } from '@/stores/notifications'
+import { useNotificationsStore } from '@/shared/services'
 
 const notificationsStore = useNotificationsStore()
 const { notifications } = storeToRefs(notificationsStore)

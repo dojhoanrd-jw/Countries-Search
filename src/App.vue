@@ -21,10 +21,10 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import Navbar from '@/components/Navbar.vue'
-import Toast from '@/components/Toast.vue'
-import ErrorBoundary from '@/components/ErrorBoundary.vue'
-import { useThemeStore } from '@/stores/theme'
+import Navbar from '@/layouts/Navbar.vue'
+import Toast from '@/shared/components/Toast.vue'
+import ErrorBoundary from '@/shared/components/ErrorBoundary.vue'
+import { useThemeStore } from '@/shared/services'
 
 const themeStore = useThemeStore()
 

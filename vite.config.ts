@@ -12,6 +12,10 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
+        '@core': path.resolve(__dirname, './src/core'),
+        '@shared': path.resolve(__dirname, './src/shared'),
+        '@features': path.resolve(__dirname, './src/features'),
+        '@layouts': path.resolve(__dirname, './src/layouts'),
       },
     },
     // Define global constants that can be replaced at compile time

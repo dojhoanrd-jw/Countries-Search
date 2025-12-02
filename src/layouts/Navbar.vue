@@ -140,12 +140,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Globe, LayoutDashboard, BarChart3, Heart, GitCompare, Sun, Moon, Menu } from 'lucide-vue-next'
-import { useThemeStore } from '@/stores/theme'
-import { useFavoritesStore } from '@/stores/favorites'
+import { useThemeStore } from '@/shared/services'
+import { useFavoritesStore } from '@/features/favorites'
 import { useI18n } from 'vue-i18n'
 import { setLocale } from '@/i18n'
 import { storeToRefs } from 'pinia'
-import { BaseButton, BaseBadge } from '@/components/ui'
+import { BaseButton, BaseBadge } from '@/shared/components'
 
 const themeStore = useThemeStore()
 const favoritesStore = useFavoritesStore()

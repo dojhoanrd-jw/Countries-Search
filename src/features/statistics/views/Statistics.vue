@@ -157,10 +157,10 @@ import {
   Expand,
   Minimize,
 } from 'lucide-vue-next'
-import { useCountriesStore } from '@/stores/countries'
-import { useThemeStore } from '@/stores/theme'
-import { useCountryName } from '@/composables/useCountryName'
-import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import { useCountriesStore } from '@/features/countries'
+import { useThemeStore } from '@/shared/services'
+import { useCountryName } from '@/features/countries'
+import LoadingSpinner from '@/shared/components/LoadingSpinner.vue'
 
 Chart.register(...registerables)
 
