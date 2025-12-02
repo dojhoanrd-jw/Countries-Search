@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, onUnmounted } from 'vue'
+import { appConfig } from '@/core/config/app.config'
 
 export type NotificationType = 'success' | 'error' | 'warning' | 'info'
 
@@ -17,7 +18,7 @@ export const useNotificationsStore = defineStore('notifications', () => {
   const show = (
     message: string,
     type: NotificationType = 'info',
-    duration = 5000
+    duration = appConfig.notifications.duration[type]
   ) => {
     // Prevent duplicate notifications
     const exists = notifications.value.some(
@@ -51,19 +52,19 @@ export const useNotificationsStore = defineStore('notifications', () => {
     }
   }
 
-  const success = (message: string, duration = 4000) => {
+  const success = (message: string, duration?: number) => {
     return show(message, 'success', duration)
   }
 
-  const error = (message: string, duration = 7000) => {
+  const error = (message: string, duration?: number) => {
     return show(message, 'error', duration)
   }
 
-  const warning = (message: string, duration = 5000) => {
+  const warning = (message: string, duration?: number) => {
     return show(message, 'warning', duration)
   }
 
-  const info = (message: string, duration = 5000) => {
+  const info = (message: string, duration?: number) => {
     return show(message, 'info', duration)
   }
 
