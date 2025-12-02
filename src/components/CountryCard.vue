@@ -126,9 +126,13 @@ const props = defineProps<Props>()
 const router = useRouter()
 const favoritesStore = useFavoritesStore()
 const { canAddToComparison } = storeToRefs(favoritesStore)
-const { getCountryName } = useCountryName()
+const { getCountryName, locale } = useCountryName()
 
-const countryName = computed(() => getCountryName(props.country))
+const countryName = computed(() => {
+  // Force reactivity on locale change
+  locale.value
+  return getCountryName(props.country)
+})
 const isFavorite = computed(() => favoritesStore.isFavorite(props.country.cca3))
 const isInComparison = computed(() => favoritesStore.isInComparison(props.country.cca3))
 

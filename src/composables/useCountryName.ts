@@ -14,6 +14,10 @@ export function useCountryName() {
    * Falls back to common name if translation not available
    */
   const getCountryName = (country: Country): string => {
+    if (!country || !country.name) {
+      return ''
+    }
+
     const currentLocale = locale.value
 
     // Map i18n locale to API translation codes
@@ -26,17 +30,24 @@ export function useCountryName() {
 
     // Try to get translation from API
     if (apiLocale && country.translations && country.translations[apiLocale]) {
-      return country.translations[apiLocale].common
+      const translation = country.translations[apiLocale]
+      if (translation && translation.common) {
+        return translation.common
+      }
     }
 
     // Fallback to common name (usually in English)
-    return country.name.common
+    return country.name.common || ''
   }
 
   /**
    * Get official country name in current locale
    */
   const getOfficialName = (country: Country): string => {
+    if (!country || !country.name) {
+      return ''
+    }
+
     const currentLocale = locale.value
 
     const localeMap: Record<string, string> = {
@@ -47,10 +58,13 @@ export function useCountryName() {
     const apiLocale = localeMap[currentLocale]
 
     if (apiLocale && country.translations && country.translations[apiLocale]) {
-      return country.translations[apiLocale].official
+      const translation = country.translations[apiLocale]
+      if (translation && translation.official) {
+        return translation.official
+      }
     }
 
-    return country.name.official
+    return country.name.official || ''
   }
 
   return {

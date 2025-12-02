@@ -1,52 +1,54 @@
 <template>
-  <div v-if="error" class="error-boundary">
-    <div class="error-content">
-      <div class="error-icon">
-        <AlertTriangle class="w-16 h-16 text-red-500" />
-      </div>
-
-      <h1 class="error-title">Algo salió mal</h1>
-
-      <p class="error-message">
-        {{ errorMessage }}
-      </p>
-
-      <div v-if="showDetails && errorDetails" class="error-details">
-        <button
-          @click="detailsExpanded = !detailsExpanded"
-          class="details-toggle"
-        >
-          {{ detailsExpanded ? 'Ocultar detalles' : 'Ver detalles técnicos' }}
-          <ChevronDown
-            class="w-4 h-4 transition-transform"
-            :class="{ 'rotate-180': detailsExpanded }"
-          />
-        </button>
-
-        <div v-if="detailsExpanded" class="details-content">
-          <pre>{{ errorDetails }}</pre>
+  <div>
+    <div v-if="error" class="error-boundary">
+      <div class="error-content">
+        <div class="error-icon">
+          <AlertTriangle class="w-16 h-16 text-red-500" />
         </div>
+
+        <h1 class="error-title">Algo salió mal</h1>
+
+        <p class="error-message">
+          {{ errorMessage }}
+        </p>
+
+        <div v-if="showDetails && errorDetails" class="error-details">
+          <button
+            @click="detailsExpanded = !detailsExpanded"
+            class="details-toggle"
+          >
+            {{ detailsExpanded ? 'Ocultar detalles' : 'Ver detalles técnicos' }}
+            <ChevronDown
+              class="w-4 h-4 transition-transform"
+              :class="{ 'rotate-180': detailsExpanded }"
+            />
+          </button>
+
+          <div v-if="detailsExpanded" class="details-content">
+            <pre>{{ errorDetails }}</pre>
+          </div>
+        </div>
+
+        <div class="error-actions">
+          <button @click="handleRetry" class="btn-primary">
+            <RotateCcw class="w-5 h-5" />
+            Reintentar
+          </button>
+
+          <button @click="handleGoHome" class="btn-secondary">
+            <Home class="w-5 h-5" />
+            Ir al inicio
+          </button>
+        </div>
+
+        <p class="error-footer">
+          Si el problema persiste, intenta recargar la página
+        </p>
       </div>
-
-      <div class="error-actions">
-        <button @click="handleRetry" class="btn-primary">
-          <RotateCcw class="w-5 h-5" />
-          Reintentar
-        </button>
-
-        <button @click="handleGoHome" class="btn-secondary">
-          <Home class="w-5 h-5" />
-          Ir al inicio
-        </button>
-      </div>
-
-      <p class="error-footer">
-        Si el problema persiste, intenta recargar la página
-      </p>
     </div>
-  </div>
 
-  <slot v-else />
+    <slot v-else />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -85,9 +87,11 @@ const errorMessage = ref<string>(props.fallbackMessage)
 
 // Capture errors from child components
 onErrorCaptured((err: Error, instance, info) => {
-  console.error('Error captured by ErrorBoundary:', err)
-  console.error('Component:', instance)
-  console.error('Error info:', info)
+  console.error('🔴 ERROR CAPTURED BY ERRORBOUNDARY:', err)
+  console.error('🔴 Component:', instance)
+  console.error('🔴 Error info:', info)
+  console.error('🔴 Error message:', err.message)
+  console.error('🔴 Stack:', err.stack)
 
   error.value = err
   errorMessage.value = getErrorMessage(err)

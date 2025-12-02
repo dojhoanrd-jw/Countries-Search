@@ -42,11 +42,22 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { Heart, Globe } from 'lucide-vue-next'
 import { useFavoritesStore } from '@/stores/favorites'
+import { useCountriesStore } from '@/stores/countries'
 import { storeToRefs } from 'pinia'
 import CountryCard from '@/components/CountryCard.vue'
 
 const favoritesStore = useFavoritesStore()
+const countriesStore = useCountriesStore()
 const { favorites } = storeToRefs(favoritesStore)
+const { countries } = storeToRefs(countriesStore)
+
+onMounted(async () => {
+  // Ensure countries are loaded
+  if (countries.value.length === 0) {
+    await countriesStore.fetchCountries()
+  }
+})
 </script>

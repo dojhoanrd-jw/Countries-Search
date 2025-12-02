@@ -361,7 +361,10 @@ onMounted(async () => {
   if (countries.value.length === 0) {
     await countriesStore.fetchCountries()
   }
-  setTimeout(() => createCharts(), 100)
+
+  setTimeout(() => {
+    createCharts()
+  }, 100)
 })
 </script>
 

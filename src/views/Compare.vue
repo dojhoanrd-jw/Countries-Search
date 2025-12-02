@@ -261,6 +261,7 @@ import {
   MapPinned,
 } from 'lucide-vue-next'
 import { useFavoritesStore } from '@/stores/favorites'
+import { useCountriesStore } from '@/stores/countries'
 import { useThemeStore } from '@/stores/theme'
 import { useCountryName } from '@/composables/useCountryName'
 import type { Country } from '@/types/country'
@@ -268,8 +269,10 @@ import type { Country } from '@/types/country'
 Chart.register(...registerables)
 
 const favoritesStore = useFavoritesStore()
+const countriesStore = useCountriesStore()
 const themeStore = useThemeStore()
 const { comparison } = storeToRefs(favoritesStore)
+const { countries } = storeToRefs(countriesStore)
 const { isDark } = storeToRefs(themeStore)
 const { clearComparison, removeFromComparison } = favoritesStore
 const { getCountryName } = useCountryName()
@@ -370,7 +373,14 @@ watch([comparison, isDark], () => {
   setTimeout(() => createCharts(), 100)
 }, { deep: true })
 
-onMounted(() => {
-  setTimeout(() => createCharts(), 100)
+onMounted(async () => {
+  // Ensure countries are loaded
+  if (countries.value.length === 0) {
+    await countriesStore.fetchCountries()
+  }
+
+  setTimeout(() => {
+    createCharts()
+  }, 100)
 })
 </script>

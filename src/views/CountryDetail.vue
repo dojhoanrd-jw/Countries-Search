@@ -258,13 +258,19 @@ const countriesStore = useCountriesStore()
 const favoritesStore = useFavoritesStore()
 const { countries } = storeToRefs(countriesStore)
 const { canAddToComparison } = storeToRefs(favoritesStore)
-const { getCountryName, getOfficialName } = useCountryName()
+const { getCountryName, getOfficialName, locale } = useCountryName()
 
 const country = ref<Country | null>(null)
 const loading = ref(true)
 
-const countryName = computed(() => country.value ? getCountryName(country.value) : '')
-const officialName = computed(() => country.value ? getOfficialName(country.value) : '')
+const countryName = computed(() => {
+  locale.value // Force reactivity
+  return country.value ? getCountryName(country.value) : ''
+})
+const officialName = computed(() => {
+  locale.value // Force reactivity
+  return country.value ? getOfficialName(country.value) : ''
+})
 
 const isFavorite = computed(() =>
   country.value ? favoritesStore.isFavorite(country.value.cca3) : false
