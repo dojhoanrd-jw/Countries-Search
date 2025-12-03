@@ -69,14 +69,13 @@
             <Moon v-else class="w-5 h-5 text-gray-600" />
           </BaseButton>
 
-          <BaseButton
-            variant="ghost"
-            size="sm"
+          <button
             @click="mobileMenuOpen = !mobileMenuOpen"
-            class="md:hidden"
+            class="md:hidden p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            aria-label="Toggle menu"
           >
             <Menu class="w-6 h-6" />
-          </BaseButton>
+          </button>
         </div>
       </div>
     </div>
