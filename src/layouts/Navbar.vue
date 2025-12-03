@@ -3,34 +3,34 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <div class="flex items-center space-x-8">
-          <router-link to="/" class="flex items-center space-x-2 text-xl font-bold text-primary-600 dark:text-primary-400">
+          <router-link :to="ROUTES.DASHBOARD" class="flex items-center space-x-2 text-xl font-bold text-primary-600 dark:text-primary-400">
             <Globe class="w-8 h-8" />
-            <span>Countries Search</span>
+            <span>{{ appConfig.app.name }}</span>
           </router-link>
 
           <div class="hidden md:flex space-x-4">
             <router-link
-              to="/"
+              :to="ROUTES.DASHBOARD"
               class="nav-link"
-              :class="{ 'active': $route.name === 'dashboard' }"
+              :class="{ 'active': $route.name === ROUTE_NAMES.DASHBOARD }"
             >
               <LayoutDashboard class="w-4 h-4" />
               <span>{{ $t('nav.dashboard') }}</span>
             </router-link>
 
             <router-link
-              to="/statistics"
+              :to="ROUTES.STATISTICS"
               class="nav-link"
-              :class="{ 'active': $route.name === 'statistics' }"
+              :class="{ 'active': $route.name === ROUTE_NAMES.STATISTICS }"
             >
               <BarChart3 class="w-4 h-4" />
               <span>{{ $t('nav.statistics') }}</span>
             </router-link>
 
             <router-link
-              to="/favorites"
+              :to="ROUTES.FAVORITES"
               class="nav-link"
-              :class="{ 'active': $route.name === 'favorites' }"
+              :class="{ 'active': $route.name === ROUTE_NAMES.FAVORITES }"
             >
               <Heart class="w-4 h-4" :fill="favoritesCount > 0 ? 'currentColor' : 'none'" />
               <span>{{ $t('nav.favorites') }}</span>
@@ -38,9 +38,9 @@
             </router-link>
 
             <router-link
-              to="/compare"
+              :to="ROUTES.COMPARISON"
               class="nav-link"
-              :class="{ 'active': $route.name === 'compare' }"
+              :class="{ 'active': $route.name === ROUTE_NAMES.COMPARISON }"
             >
               <GitCompare class="w-4 h-4" />
               <span>{{ $t('nav.compare') }}</span>
@@ -93,40 +93,40 @@
       <div v-if="mobileMenuOpen" class="md:hidden border-t border-gray-200 dark:border-gray-700">
         <div class="px-2 pt-2 pb-3 space-y-1">
           <router-link
-            to="/"
+            :to="ROUTES.DASHBOARD"
             @click="mobileMenuOpen = false"
             class="mobile-nav-link"
-            :class="{ 'active': $route.name === 'dashboard' }"
+            :class="{ 'active': $route.name === ROUTE_NAMES.DASHBOARD }"
           >
             <LayoutDashboard class="w-4 h-4" />
             <span>{{ $t('nav.dashboard') }}</span>
           </router-link>
 
           <router-link
-            to="/statistics"
+            :to="ROUTES.STATISTICS"
             @click="mobileMenuOpen = false"
             class="mobile-nav-link"
-            :class="{ 'active': $route.name === 'statistics' }"
+            :class="{ 'active': $route.name === ROUTE_NAMES.STATISTICS }"
           >
             <BarChart3 class="w-4 h-4" />
             <span>{{ $t('nav.statistics') }}</span>
           </router-link>
 
           <router-link
-            to="/favorites"
+            :to="ROUTES.FAVORITES"
             @click="mobileMenuOpen = false"
             class="mobile-nav-link"
-            :class="{ 'active': $route.name === 'favorites' }"
+            :class="{ 'active': $route.name === ROUTE_NAMES.FAVORITES }"
           >
             <Heart class="w-4 h-4" />
             <span>{{ $t('nav.favorites') }} ({{ favoritesCount }})</span>
           </router-link>
 
           <router-link
-            to="/compare"
+            :to="ROUTES.COMPARISON"
             @click="mobileMenuOpen = false"
             class="mobile-nav-link"
-            :class="{ 'active': $route.name === 'compare' }"
+            :class="{ 'active': $route.name === ROUTE_NAMES.COMPARISON }"
           >
             <GitCompare class="w-4 h-4" />
             <span>{{ $t('nav.compare') }} ({{ comparisonCount }})</span>
@@ -146,6 +146,8 @@ import { useI18n } from 'vue-i18n'
 import { setLocale } from '@/i18n'
 import { storeToRefs } from 'pinia'
 import { BaseButton, BaseBadge } from '@/shared/components'
+import { ROUTES, ROUTE_NAMES } from '@/core/constants/routes.constants'
+import { appConfig } from '@/core/config/app.config'
 
 const themeStore = useThemeStore()
 const favoritesStore = useFavoritesStore()

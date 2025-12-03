@@ -17,6 +17,22 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+/**
+ * Base Button Component
+ *
+ * A versatile button component with multiple variants and sizes
+ *
+ * @example
+ * ```vue
+ * <BaseButton variant="primary" size="md" @click="handleClick">
+ *   Click me
+ * </BaseButton>
+ *
+ * <BaseButton variant="danger" :loading="isLoading" loading-text="Saving...">
+ *   Save
+ * </BaseButton>
+ * ```
+ */
 export interface BaseButtonProps {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'success'
   size?: 'sm' | 'md' | 'lg' | 'xl'
@@ -28,6 +44,10 @@ export interface BaseButtonProps {
   rounded?: boolean
 }
 
+const VALID_VARIANTS = ['primary', 'secondary', 'outline', 'ghost', 'danger', 'success'] as const
+const VALID_SIZES = ['sm', 'md', 'lg', 'xl'] as const
+const VALID_TYPES = ['button', 'submit', 'reset'] as const
+
 const props = withDefaults(defineProps<BaseButtonProps>(), {
   variant: 'primary',
   size: 'md',
@@ -37,6 +57,19 @@ const props = withDefaults(defineProps<BaseButtonProps>(), {
   fullWidth: false,
   rounded: false
 })
+
+// Validate props
+if (props.variant && !VALID_VARIANTS.includes(props.variant as any)) {
+  console.warn(`[BaseButton] Invalid variant: "${props.variant}". Must be one of: ${VALID_VARIANTS.join(', ')}`)
+}
+
+if (props.size && !VALID_SIZES.includes(props.size as any)) {
+  console.warn(`[BaseButton] Invalid size: "${props.size}". Must be one of: ${VALID_SIZES.join(', ')}`)
+}
+
+if (props.type && !VALID_TYPES.includes(props.type as any)) {
+  console.warn(`[BaseButton] Invalid type: "${props.type}". Must be one of: ${VALID_TYPES.join(', ')}`)
+}
 
 const emit = defineEmits<{
   click: [event: MouseEvent]

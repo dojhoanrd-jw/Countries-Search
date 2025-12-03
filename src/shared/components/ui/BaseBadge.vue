@@ -9,6 +9,17 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+/**
+ * Base Badge Component
+ *
+ * Small status indicators with multiple color variants
+ *
+ * @example
+ * ```vue
+ * <BaseBadge variant="success">Active</BaseBadge>
+ * <BaseBadge variant="danger" rounded>3</BaseBadge>
+ * ```
+ */
 export interface BaseBadgeProps {
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'neutral'
   size?: 'sm' | 'md' | 'lg'
@@ -17,6 +28,9 @@ export interface BaseBadgeProps {
   dot?: boolean
 }
 
+const VALID_VARIANTS = ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'neutral'] as const
+const VALID_SIZES = ['sm', 'md', 'lg'] as const
+
 const props = withDefaults(defineProps<BaseBadgeProps>(), {
   variant: 'primary',
   size: 'md',
@@ -24,6 +38,15 @@ const props = withDefaults(defineProps<BaseBadgeProps>(), {
   outlined: false,
   dot: false
 })
+
+// Validate props
+if (props.variant && !VALID_VARIANTS.includes(props.variant as any)) {
+  console.warn(`[BaseBadge] Invalid variant: "${props.variant}". Must be one of: ${VALID_VARIANTS.join(', ')}`)
+}
+
+if (props.size && !VALID_SIZES.includes(props.size as any)) {
+  console.warn(`[BaseBadge] Invalid size: "${props.size}". Must be one of: ${VALID_SIZES.join(', ')}`)
+}
 
 const badgeClasses = computed(() => {
   const classes = ['badge', `badge-${props.variant}`, `badge-${props.size}`]

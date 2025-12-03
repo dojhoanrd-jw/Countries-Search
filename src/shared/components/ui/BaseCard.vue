@@ -19,6 +19,24 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+/**
+ * Base Card Component
+ *
+ * Container component with multiple visual variants
+ *
+ * @example
+ * ```vue
+ * <BaseCard title="My Card" variant="elevated">
+ *   <p>Card content</p>
+ * </BaseCard>
+ *
+ * <BaseCard variant="glass" hoverable>
+ *   <template #header>Custom Header</template>
+ *   Content here
+ *   <template #footer>Actions</template>
+ * </BaseCard>
+ * ```
+ */
 export interface BaseCardProps {
   variant?: 'default' | 'bordered' | 'elevated' | 'glass'
   padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl'
@@ -27,12 +45,24 @@ export interface BaseCardProps {
   clickable?: boolean
 }
 
+const VALID_VARIANTS = ['default', 'bordered', 'elevated', 'glass'] as const
+const VALID_PADDINGS = ['none', 'sm', 'md', 'lg', 'xl'] as const
+
 const props = withDefaults(defineProps<BaseCardProps>(), {
   variant: 'default',
   padding: 'md',
   hoverable: false,
   clickable: false
 })
+
+// Validate props
+if (props.variant && !VALID_VARIANTS.includes(props.variant as any)) {
+  console.warn(`[BaseCard] Invalid variant: "${props.variant}". Must be one of: ${VALID_VARIANTS.join(', ')}`)
+}
+
+if (props.padding && !VALID_PADDINGS.includes(props.padding as any)) {
+  console.warn(`[BaseCard] Invalid padding: "${props.padding}". Must be one of: ${VALID_PADDINGS.join(', ')}`)
+}
 
 const cardClasses = computed(() => {
   const classes = ['card', `card-${props.variant}`]

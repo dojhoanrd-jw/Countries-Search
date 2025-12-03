@@ -48,6 +48,22 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
+/**
+ * Base Input Component
+ *
+ * A flexible input component with validation, icons, and multiple variants
+ *
+ * @example
+ * ```vue
+ * <BaseInput
+ *   v-model="email"
+ *   type="email"
+ *   label="Email"
+ *   placeholder="Enter your email"
+ *   :error="emailError"
+ * />
+ * ```
+ */
 export interface BaseInputProps {
   modelValue?: string | number
   type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search'
@@ -64,6 +80,10 @@ export interface BaseInputProps {
   variant?: 'default' | 'filled' | 'flushed'
 }
 
+const VALID_TYPES = ['text', 'email', 'password', 'number', 'tel', 'url', 'search'] as const
+const VALID_SIZES = ['sm', 'md', 'lg'] as const
+const VALID_VARIANTS = ['default', 'filled', 'flushed'] as const
+
 const props = withDefaults(defineProps<BaseInputProps>(), {
   type: 'text',
   disabled: false,
@@ -74,6 +94,19 @@ const props = withDefaults(defineProps<BaseInputProps>(), {
   size: 'md',
   variant: 'default'
 })
+
+// Validate props
+if (props.type && !VALID_TYPES.includes(props.type as any)) {
+  console.warn(`[BaseInput] Invalid type: "${props.type}". Must be one of: ${VALID_TYPES.join(', ')}`)
+}
+
+if (props.size && !VALID_SIZES.includes(props.size as any)) {
+  console.warn(`[BaseInput] Invalid size: "${props.size}". Must be one of: ${VALID_SIZES.join(', ')}`)
+}
+
+if (props.variant && !VALID_VARIANTS.includes(props.variant as any)) {
+  console.warn(`[BaseInput] Invalid variant: "${props.variant}". Must be one of: ${VALID_VARIANTS.join(', ')}`)
+}
 
 const emit = defineEmits<{
   'update:modelValue': [value: string | number]
