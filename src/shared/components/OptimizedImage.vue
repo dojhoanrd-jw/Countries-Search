@@ -101,7 +101,7 @@ onMounted(() => {
         })
       },
       {
-        rootMargin: '50px', // Load 50px before entering viewport
+        rootMargin: '50px',
         threshold: 0.01
       }
     )
