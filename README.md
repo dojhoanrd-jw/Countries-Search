@@ -1,6 +1,6 @@
 # 🌍 Countries Search
 
-Una aplicación web moderna para explorar información detallada sobre países de todo el mundo. Construida con Vue 3, TypeScript y las mejores prácticas de desarrollo frontend.
+A modern web application to explore detailed information about countries from around the world. Built with Vue 3, TypeScript, and frontend development best practices.
 
 ![Vue.js](https://img.shields.io/badge/Vue.js-3.5-4FC08D?style=flat&logo=vue.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=flat&logo=typescript&logoColor=white)
@@ -8,133 +8,133 @@ Una aplicación web moderna para explorar información detallada sobre países d
 ![Vitest](https://img.shields.io/badge/Vitest-4.0-6E9F18?style=flat&logo=vitest&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-06B6D4?style=flat&logo=tailwind-css&logoColor=white)
 
-## 📋 Descripción
+## 📋 Description
 
-Aplicación interactiva que permite explorar información de más de 250 países del mundo. Incluye búsqueda avanzada, sistema de favoritos, comparación de países, estadísticas globales con gráficos interactivos, y soporte para múltiples idiomas con modo oscuro.
+Interactive application that allows you to explore information about more than 250 countries worldwide. Features advanced search, favorites system, country comparison, global statistics with interactive charts, and support for multiple languages with dark mode.
 
-**Características principales:**
-- 🔍 Búsqueda y filtros avanzados (nombre, capital, región, idioma, moneda)
-- ⭐ Sistema de favoritos con persistencia local
-- 🔄 Comparación de hasta 4 países simultáneamente
-- 📊 Estadísticas globales con visualizaciones
-- 🌓 Dark mode con persistencia
-- 🌐 Multiidioma (Español/Inglés)
-- 📱 Diseño responsive
-- ✅ 170 tests unitarios y de integración
+**Key Features:**
+- 🔍 Advanced search and filters (name, capital, region, language, currency)
+- ⭐ Favorites system with local persistence
+- 🔄 Compare up to 4 countries simultaneously
+- 📊 Global statistics with visualizations
+- 🌓 Dark mode with persistence
+- 🌐 Multi-language support (Spanish/English)
+- 📱 Responsive design
+- ✅ 170 unit and integration tests
 
-## 🛠 Tecnologías Usadas
+## 🛠 Technologies Used
 
 ### Core
-- **Vue 3** - Framework progresivo con Composition API
-- **TypeScript** - Tipado estático para JavaScript
-- **Vite** - Build tool ultrarrápido
-- **Pinia** - State management oficial de Vue
-- **Vue Router** - Sistema de enrutamiento
+- **Vue 3** - Progressive framework with Composition API
+- **TypeScript** - Static typing for JavaScript
+- **Vite** - Ultra-fast build tool
+- **Pinia** - Official Vue state management
+- **Vue Router** - Routing system
 
 ### UI & Styling
-- **Tailwind CSS** - Framework CSS utility-first
-- **Lucide Icons** - Iconos modernos
-- **Chart.js** - Gráficos interactivos
+- **Tailwind CSS** - Utility-first CSS framework
+- **Lucide Icons** - Modern icons
+- **Chart.js** - Interactive charts
 
 ### Testing & Quality
-- **Vitest** - Framework de testing
-- **Vue Test Utils** - Testing de componentes Vue
-- **Happy DOM** - Entorno DOM para tests
+- **Vitest** - Testing framework
+- **Vue Test Utils** - Vue component testing
+- **Happy DOM** - DOM environment for tests
 
-### Otros
-- **Vue I18n** - Internacionalización
-- **Axios** - Cliente HTTP
-- **REST Countries API** - API pública de datos
+### Others
+- **Vue I18n** - Internationalization
+- **Axios** - HTTP client
+- **REST Countries API** - Public data API
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 countries-search/
 ├── src/
-│   ├── core/                      # Configuración y tipos globales
-│   │   ├── config/                # Configuración centralizada
-│   │   ├── constants/             # Constantes (API, rutas)
-│   │   └── types/                 # Tipos TypeScript
+│   ├── core/                      # Global configuration and types
+│   │   ├── config/                # Centralized configuration
+│   │   ├── constants/             # Constants (API, routes)
+│   │   └── types/                 # TypeScript types
 │   │
-│   ├── shared/                    # Código compartido
-│   │   ├── components/            # Componentes reutilizables
+│   ├── shared/                    # Shared code
+│   │   ├── components/            # Reusable components
 │   │   │   ├── ui/                # Base components (Button, Input, Badge, Card)
 │   │   │   └── ...                # ErrorBoundary, Toast, LoadingSpinner
-│   │   ├── composables/           # Hooks reutilizables
-│   │   │   ├── useLocalStorage.ts # LocalStorage reactivo
-│   │   │   └── useErrorHandler.ts # Manejo de errores
-│   │   └── services/              # Servicios globales
-│   │       ├── api.service.ts     # API REST Countries
-│   │       ├── http-client.ts     # Cliente HTTP con cache/retry
+│   │   ├── composables/           # Reusable hooks
+│   │   │   ├── useLocalStorage.ts # Reactive LocalStorage
+│   │   │   └── useErrorHandler.ts # Error handling
+│   │   └── services/              # Global services
+│   │       ├── api.service.ts     # REST Countries API
+│   │       ├── http-client.ts     # HTTP client with cache/retry
 │   │       ├── notifications.service.ts
 │   │       └── theme.service.ts
 │   │
-│   ├── features/                  # Módulos por funcionalidad
-│   │   ├── countries/             # Dashboard y detalle de países
-│   │   ├── favorites/             # Sistema de favoritos
-│   │   ├── comparison/            # Comparación de países
-│   │   └── statistics/            # Estadísticas y gráficos
+│   ├── features/                  # Feature modules
+│   │   ├── countries/             # Dashboard and country details
+│   │   ├── favorites/             # Favorites system
+│   │   ├── comparison/            # Country comparison
+│   │   └── statistics/            # Statistics and charts
 │   │
 │   ├── layouts/                   # Layouts (Navbar)
-│   ├── i18n/                      # Traducciones (es, en)
-│   ├── router/                    # Configuración de rutas
-│   ├── tests/                     # Setup de tests
+│   ├── i18n/                      # Translations (es, en)
+│   ├── router/                    # Route configuration
+│   ├── tests/                     # Test setup
 │   ├── App.vue
 │   └── main.ts
 │
-├── vitest.config.ts               # Configuración de Vitest
-├── vite.config.ts                 # Configuración de Vite
-├── tailwind.config.js             # Configuración de Tailwind
-└── tsconfig.json                  # Configuración de TypeScript
+├── vitest.config.ts               # Vitest configuration
+├── vite.config.ts                 # Vite configuration
+├── tailwind.config.js             # Tailwind configuration
+└── tsconfig.json                  # TypeScript configuration
 ```
 
-## 🚀 Cómo Clonar y Ejecutar
+## 🚀 How to Clone and Run
 
-### Prerrequisitos
+### Prerequisites
 - Node.js >= 18.0.0
-- pnpm (recomendado) o npm
+- pnpm (recommended) or npm
 
-### Instalación
+### Installation
 
 ```bash
-# 1. Clonar el repositorio
-git clone https://github.com/tu-usuario/countries-search.git
+# 1. Clone the repository
+git clone https://github.com/your-username/countries-search.git
 cd countries-search
 
-# 2. Instalar dependencias
+# 2. Install dependencies
 pnpm install
-# o con npm
+# or with npm
 npm install
 
-# 3. Iniciar servidor de desarrollo
+# 3. Start development server
 pnpm dev
-# o con npm
+# or with npm
 npm run dev
 
-# 4. Abrir en el navegador
+# 4. Open in browser
 # http://localhost:5173
 ```
 
-### Scripts Disponibles
+### Available Scripts
 
 ```bash
-# Desarrollo
-pnpm dev              # Servidor de desarrollo
+# Development
+pnpm dev              # Development server
 
 # Build
-pnpm build            # Build para producción
-pnpm preview          # Preview del build
+pnpm build            # Production build
+pnpm preview          # Preview build
 
 # Testing
-pnpm test             # Tests en modo watch
-pnpm test:run         # Ejecutar todos los tests
-pnpm test:ui          # Interfaz UI de Vitest
-pnpm test:coverage    # Reporte de cobertura
+pnpm test             # Tests in watch mode
+pnpm test:run         # Run all tests
+pnpm test:ui          # Vitest UI interface
+pnpm test:coverage    # Coverage report
 ```
 
 ---
 
 <div align="center">
-  <p>Hecho con ❤️ usando Vue 3, TypeScript y Vite</p>
-  <p><strong>⭐ Si este proyecto te resultó útil o interesante, ¡regálale una estrella en GitHub! ⭐</strong></p>
+  <p>Made with ❤️ using Vue 3, TypeScript and Vite</p>
+  <p><strong>⭐ If you found this project useful or interesting, give it a star on GitHub! ⭐</strong></p>
 </div>
