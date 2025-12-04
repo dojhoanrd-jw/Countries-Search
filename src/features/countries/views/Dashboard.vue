@@ -127,20 +127,6 @@
         <SkeletonCard v-for="i in 9" :key="i" />
       </div>
 
-      <!-- Error State -->
-      <div v-else-if="error" class="text-center py-12">
-        <AlertCircle class="w-16 h-16 text-red-500 mx-auto mb-4" />
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{{ $t('dashboard.errorLoading') }}</h3>
-        <p class="text-gray-600 dark:text-gray-400 mb-4">{{ error }}</p>
-        <BaseButton
-          variant="primary"
-          size="lg"
-          @click="fetchCountries"
-        >
-          {{ $t('common.retry') }}
-        </BaseButton>
-      </div>
-
       <!-- Countries Grid with Pagination -->
       <div v-else-if="filteredCountries.length > 0">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -152,16 +138,16 @@
         </div>
 
         <!-- Pagination Controls -->
-        <div v-if="totalPages > 1" class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div class="text-sm text-gray-600 dark:text-gray-400">
+        <div v-if="totalPages > 1" class="mt-8 flex flex-col items-center gap-4">
+          <div class="text-sm text-gray-600 dark:text-gray-400 text-center">
             {{ $t('dashboard.showing', { start: startIndex + 1, end: endIndex, total: filteredCountries.length }) }}
           </div>
 
-          <div class="flex items-center space-x-2">
+          <div class="flex items-center gap-1 sm:gap-2 flex-wrap justify-center">
             <button
               @click="goToFirstPage"
               :disabled="currentPage === 1"
-              class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              class="px-2 sm:px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
               :title="$t('dashboard.firstPage')"
             >
               <ChevronsLeft class="w-4 h-4" />
@@ -170,19 +156,19 @@
             <button
               @click="prevPage"
               :disabled="currentPage === 1"
-              class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              class="px-2 sm:px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
               :title="$t('dashboard.previousPage')"
             >
               <ChevronLeft class="w-4 h-4" />
             </button>
 
-            <div class="flex items-center space-x-1">
+            <div class="flex items-center gap-1">
               <button
                 v-for="page in visiblePages"
                 :key="page"
                 @click="goToPage(page)"
                 :class="[
-                  'px-4 py-2 rounded-lg transition-colors duration-200',
+                  'px-3 sm:px-4 py-2 rounded-lg transition-colors duration-200 text-sm',
                   currentPage === page
                     ? 'bg-primary-600 text-white'
                     : 'border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700'
@@ -195,7 +181,7 @@
             <button
               @click="nextPage"
               :disabled="currentPage === totalPages"
-              class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              class="px-2 sm:px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
               :title="$t('dashboard.nextPage')"
             >
               <ChevronRight class="w-4 h-4" />
@@ -204,21 +190,21 @@
             <button
               @click="goToLastPage"
               :disabled="currentPage === totalPages"
-              class="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              class="px-2 sm:px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
               :title="$t('dashboard.lastPage')"
             >
               <ChevronsRight class="w-4 h-4" />
             </button>
           </div>
 
-          <div class="flex items-center space-x-2">
-            <label for="itemsPerPage" class="text-sm text-gray-600 dark:text-gray-400">
+          <div class="flex items-center gap-2">
+            <label for="itemsPerPage" class="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">
               {{ $t('common.perPage') }}:
             </label>
             <select
               id="itemsPerPage"
               v-model.number="itemsPerPage"
-              class="px-3 py-2 bg-white dark:bg-[#1a1a1a] border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+              class="px-3 py-2 bg-white dark:bg-[#1a1a1a] border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm"
             >
               <option :value="12">12</option>
               <option :value="24">24</option>
@@ -251,7 +237,7 @@ import { ref, computed, onMounted, watch, defineAsyncComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 import {
   Search, Filter, ArrowUpDown, ArrowUp, ArrowDown, RotateCcw,
-  ChevronDown, Globe, AlertCircle, ChevronLeft, ChevronRight,
+  ChevronDown, Globe, ChevronLeft, ChevronRight,
   ChevronsLeft, ChevronsRight
 } from 'lucide-vue-next'
 import { useCountriesStore } from '@/features/countries'
@@ -263,7 +249,7 @@ import { BaseButton, BaseInput } from '@/shared/components'
 const CountryCard = defineAsyncComponent(() => import('@/features/countries/components/CountryCard.vue'))
 
 const countriesStore = useCountriesStore()
-const { filteredCountries, regions, loading, error } = storeToRefs(countriesStore)
+const { filteredCountries, regions, loading } = storeToRefs(countriesStore)
 const { fetchCountries, setFilters, resetFilters, setSorting } = countriesStore
 
 const searchQuery = ref('')
